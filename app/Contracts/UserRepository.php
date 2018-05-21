@@ -8,7 +8,7 @@ interface UserRepository
 
 	public function show($id);
 
-	public function showByBatch($id);
+	public function showByType($id);
 
 	public function update($request, $id);
 

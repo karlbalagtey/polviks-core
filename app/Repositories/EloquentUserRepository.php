@@ -37,7 +37,7 @@ class EloquentUserRepository implements UserRepository
 		return $this->user->where('id', $id)->first();
 	}
 
-	public function showByBatch($id)
+	public function showByType($id)
     {
         return $this->curriculum->where('id', $id)->first()->users;
     }
