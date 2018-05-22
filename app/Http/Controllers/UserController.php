@@ -14,11 +14,10 @@ class UserController extends Controller
     protected $user;
     protected $class;
 
-    public function __construct(UserRepository $user, CurriculumRepository $class)
+    public function __construct(UserRepository $user)
     {
-        $this->middleware('admin');
+        $this->middleware('client');
         $this->user = $user;
-        $this->class = $class;
     }
 
     /**
@@ -30,9 +29,10 @@ class UserController extends Controller
     {
         //
         $users = $this->user->index();
-        $class = $this->class->index();
 
-        return view('users.index', ['users' => $users, 'class' => $class]);
+        return response()->json([
+            'data' => $users
+        ], 200);
     }
 
     /**
