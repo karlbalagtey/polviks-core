@@ -2,20 +2,20 @@
 
 namespace App\Repositories;
 
-use App\User;
-use App\Contracts\UserRepository;
+use App\Customer;
+use App\Contracts\CustomerRepository;
 
-class EloquentUserRepository implements UserRepository
+class EloquentCustomerRepository implements CustomerRepository
 {
 
 	protected $user;
 
     /**
-     * Constructor injects Admin Users
+     * Constructor injects Customer Model
      * @param User       $user  User model
      * @param Curriculum $class Curriculum
      */
-	public function __construct(User $user)
+	public function __construct(Customer $user)
 	{
 		$this->user = $user;
 	}
@@ -46,7 +46,7 @@ class EloquentUserRepository implements UserRepository
      */
 	public function showByType($id)
     {
-        // return $this->curriculum->where('id', $id)->first()->users;
+
     }
 
     /**
@@ -83,7 +83,7 @@ class EloquentUserRepository implements UserRepository
         	'email' => $request->email
         ]);
 
-        if ($request->password != '') {
+        if($request->password != ''){
             $user->password = bcrypt($request->password);
             $user->save();
         }
@@ -92,7 +92,7 @@ class EloquentUserRepository implements UserRepository
     }
 
     /**
-     * Deletes user
+     * Deletes user and returns result
      * @param $id
      * @return int
      */
@@ -100,5 +100,4 @@ class EloquentUserRepository implements UserRepository
 	{
 		return $this->user::destroy($id);
 	}
-
 }

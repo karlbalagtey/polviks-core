@@ -3,9 +3,22 @@
 namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
+use App\Contracts\AgentRepository;
 
 class AgentController extends ApiController
 {
+
+    protected $agent;
+
+    /**
+     * Constructor inject Agent Repository
+     * @param AgentRepository $agent Agent Repository with EloquentAgentRepository
+     */
+    public function __construct(AgentRepository $agent)
+    {
+        $this->agent = $agent;
+    }
+
     /**
      * Display a listing of the resource.
      *

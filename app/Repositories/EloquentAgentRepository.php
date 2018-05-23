@@ -2,20 +2,20 @@
 
 namespace App\Repositories;
 
-use App\User;
-use App\Contracts\UserRepository;
+use App\Agent;
+use App\Contracts\AgentRepository;
 
-class EloquentUserRepository implements UserRepository
+class EloquentAgentRepository implements AgentRepository
 {
 
 	protected $user;
 
     /**
-     * Constructor injects Admin Users
+     * Constructor injects Agent Model
      * @param User       $user  User model
      * @param Curriculum $class Curriculum
      */
-	public function __construct(User $user)
+	public function __construct(Agent $user)
 	{
 		$this->user = $user;
 	}
@@ -83,7 +83,7 @@ class EloquentUserRepository implements UserRepository
         	'email' => $request->email
         ]);
 
-        if ($request->password != '') {
+        if($request->password != ''){
             $user->password = bcrypt($request->password);
             $user->save();
         }

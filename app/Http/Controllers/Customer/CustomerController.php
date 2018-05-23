@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 
 class CustomerController extends ApiController
 {
+    protected $user;
+
+    /**
+     * Constructor injected with Customer repository
+     * @param CustomerRepository $user Customer repository with Eloquent
+     */
+    public function __construct(CustomerRepository $user)
+    {
+        $this->middleware('client');
+        $this->user = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *

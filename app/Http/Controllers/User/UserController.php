@@ -12,8 +12,11 @@ class UserController extends ApiController
 {
 
     protected $user;
-    protected $class;
 
+    /**
+     * Constructor injected with Admin User Repository
+     * @param UserRepository $user User repository with Eloquent
+     */
     public function __construct(UserRepository $user)
     {
         $this->middleware('client');
