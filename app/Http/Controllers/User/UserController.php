@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Contracts\CurriculumRepository;
 use App\User;
@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Contracts\UserRepository;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
 
     protected $user;
