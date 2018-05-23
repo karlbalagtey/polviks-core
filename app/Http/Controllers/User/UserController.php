@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Contracts\CurriculumRepository;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
 use App\Contracts\UserRepository;
+use App\Http\Requests\UserRequest;
+use App\Http\Controllers\ApiController;
 
 class UserController extends ApiController
 {

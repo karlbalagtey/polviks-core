@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
+use App\Contracts\CustomerRepository;
+use App\Http\Controllers\ApiController;
 
 class CustomerController extends ApiController
 {

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Agent;
 
 use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
+use App\Http\Controllers\ApiController;
 
 class AgentController extends ApiController
 {
@@ -16,6 +17,7 @@ class AgentController extends ApiController
      */
     public function __construct(AgentRepository $agent)
     {
+
         $this->agent = $agent;
     }
 
