@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Faker\Generator as Faker;
 
 /*
@@ -17,7 +18,10 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => 'secret',
+        'password' => bcrypt('secret'),
+        'verified' => $verified = $faker->randomElement([User::VERIFIED_USER, User::UNVERIFIED_USER]),
+        'verification_token' => $verified == User::VERIFIED_USER ? null : User::generateVerificationCode(),
+        'admin' => $verified = $faker->randomElement([User::ADMIN_USER, User::REGULAR_USER]),
         'remember_token' => str_random(10),
     ];
 });
@@ -27,7 +31,11 @@ $factory->define(App\Customer::class, function (Faker $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => 'customer',
+        'password' => bcrypt('secret'),
+        'verified' => $verified = $faker->randomElement([User::VERIFIED_USER, User::UNVERIFIED_USER]),
+        'verification_token' => $verified == User::VERIFIED_USER ? null : User::generateVerificationCode(),
+        'admin' => $verified = $faker->randomElement([User::ADMIN_USER, User::REGULAR_USER]),
+        'remember_token' => str_random(10),
     ];
 });
 
@@ -36,6 +44,10 @@ $factory->define(App\Agent::class, function (Faker $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => 'agent',
+        'password' => bcrypt('secret'),
+        'verified' => $verified = $faker->randomElement([User::VERIFIED_USER, User::UNVERIFIED_USER]),
+        'verification_token' => $verified == User::VERIFIED_USER ? null : User::generateVerificationCode(),
+        'admin' => $verified = $faker->randomElement([User::ADMIN_USER, User::REGULAR_USER]),
+        'remember_token' => str_random(10),
     ];
 });

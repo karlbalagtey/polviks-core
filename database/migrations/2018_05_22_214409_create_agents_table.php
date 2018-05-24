@@ -1,5 +1,6 @@
 <?php
 
+use App\Agent;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -19,6 +20,9 @@ class CreateAgentsTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->rememberToken();
+            $table->string('verified')->default(Agent::UNVERIFIED_USER);
+            $table->string('verification_token')->nullable();
             $table->timestamps();
         });
     }
