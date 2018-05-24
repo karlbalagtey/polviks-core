@@ -9,7 +9,7 @@ use App\Http\Controllers\ApiController;
 class AgentController extends ApiController
 {
 
-    protected $agent;
+    protected $user;
 
     /**
      * Constructor inject Agent Repository
@@ -17,8 +17,8 @@ class AgentController extends ApiController
      */
     public function __construct(AgentRepository $agent)
     {
-
-        $this->agent = $agent;
+        $this->middleware('client');
+        $this->user = $agent;
     }
 
     /**
@@ -28,7 +28,11 @@ class AgentController extends ApiController
      */
     public function index()
     {
-        //
+        $users = $this->user->index();
+
+        return response()->json([
+            'data' => $users
+        ], 200);
     }
 
     /**

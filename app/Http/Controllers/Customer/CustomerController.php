@@ -16,7 +16,6 @@ class CustomerController extends ApiController
      */
     public function __construct(CustomerRepository $user)
     {
-        $this->middleware('client');
         $this->user = $user;
     }
 
@@ -27,7 +26,11 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        //
+        $users = $this->user->index();
+
+        return response()->json([
+            'data' => $users
+        ], 200);
     }
 
     /**
