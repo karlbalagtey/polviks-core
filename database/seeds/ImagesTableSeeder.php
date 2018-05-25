@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TransactionsTableSeeder extends Seeder
+class ImagesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class TransactionsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Transaction::class, 500)->create();
+        factory(App\Image::class, 200)->create();
     }
 }

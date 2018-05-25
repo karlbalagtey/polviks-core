@@ -2,16 +2,17 @@
 
 use App\User;
 use App\Agent;
+use App\Customer;
 use App\Transaction;
 use Faker\Generator as Faker;
 
 $factory->define(Transaction::class, function (Faker $faker) {
-	$seller = Agent::has('products')->get()->random();
-	$buyer = User::all()->except($seller->id)->random();
+	$agent = Agent::has('products')->get()->random();
+	$customer = Customer::all()->random();
 
     return [
-        'quantity' => $factory->numberBetween(1,3),
-        'buyer_id' => $buyer->id,
-        'product_id' => $seller->products->random()->id,
+        'quantity' => $faker->numberBetween(1,3),
+        'customer_id' => $customer->id,
+        'product_id' => $agent->products->random()->id,
     ];
 });

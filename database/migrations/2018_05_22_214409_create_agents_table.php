@@ -23,6 +23,7 @@ class CreateAgentsTable extends Migration
             $table->rememberToken();
             $table->string('verified')->default(Agent::UNVERIFIED_USER);
             $table->string('verification_token')->nullable();
+            $table->string('admin')->default(Agent::REGULAR_USER);
             $table->timestamps();
         });
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Role;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
@@ -11,26 +12,35 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
-        	[
-                'role_type' => 'Superuser',
-                'role_description' => 'Super User'
-            ],
+        /*
+         * Add Roles
+         *
+         */
+        if (Role::where('slug', '=', 'admin')->first() === null) {
+            $adminRole = Role::create([
+                'name'        => 'Admin',
+                'slug'        => 'admin',
+                'description' => 'Admin Role',
+                'level'       => 5,
+            ]);
+        }
 
-        	[
-                'role_type' => 'Admin',
-                'role_description' => 'System Administrator'
-            ],
+        if (Role::where('slug', '=', 'user')->first() === null) {
+            $userRole = Role::create([
+                'name'        => 'User',
+                'slug'        => 'user',
+                'description' => 'User Role',
+                'level'       => 1,
+            ]);
+        }
 
-        	[
-                'role_type' => 'Marketing',
-        	    'role_description' => 'Marketing Polviks User'
-            ],
-
-        	[
-                'role_type' => 'Staff',
-        	    'role_description' => 'Staff Polviks User'
-            ]
-        ]);
+        if (Role::where('slug', '=', 'unverified')->first() === null) {
+            $userRole = Role::create([
+                'name'        => 'Unverified',
+                'slug'        => 'unverified',
+                'description' => 'Unverified Role',
+                'level'       => 0,
+            ]);
+        }
     }
 }

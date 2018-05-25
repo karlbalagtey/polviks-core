@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use Illuminate\Database\Seeder;
 
 class ServicesTableSeeder extends Seeder
@@ -11,6 +12,12 @@ class ServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Service::class, 1000)->create();
+        factory(App\Service::class, 200)->create()->each(
+        	function ($service) {
+        		$categories = Category::all()->random(mt_rand(1, 5))->pluck('id');
+
+        		$service->categories()->attach($categories);
+        	}
+        );
     }
 }
