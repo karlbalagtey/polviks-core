@@ -26,10 +26,12 @@ class Agent extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'username',
         'email',
         'password',
         'verified',
         'verification_token',
+        'admin'
     ];
 
     /**

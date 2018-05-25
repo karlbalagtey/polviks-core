@@ -57,6 +57,8 @@ class EloquentAgentRepository implements AgentRepository
     public function store($data)
     {
         $user = $this->user::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

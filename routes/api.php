@@ -18,21 +18,31 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 /**
+ * Admin users
+ */
+Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]);
+
+/**
  * Customers
  */
-Route::resource('customers', 'Customer\CustomerController');
+Route::resource('customers', 'Customer\CustomerController', ['only' => ['index', 'show']]);
 
 /**
  * Agents
  */
-Route::resource('agents', 'Agent\AgentController');
+Route::resource('agents', 'Agent\AgentController', ['only' => ['index', 'show']]);
+
+/**
+ * Categories
+ */
+Route::resource('categories', 'Service\ServiceController', ['except' => ['create', 'edit']]);
 
 /**
  * Products
  */
-Route::resource('products', 'Product\ProductController');
+Route::resource('products', 'Product\ProductController', ['only' => ['index', 'show']]);
 
 /**
  * Service
  */
-Route::resource('services', 'Service\ServiceController');
+Route::resource('services', 'Service\ServiceController', ['only' => ['index', 'show']]);

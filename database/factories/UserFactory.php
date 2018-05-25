@@ -18,7 +18,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'username' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('secret'),
         'verified' => $verified = $faker->randomElement([User::VERIFIED_USER, User::UNVERIFIED_USER]),
@@ -32,6 +34,7 @@ $factory->define(App\Customer::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'username' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('secret'),
         'verified' => $verified = $faker->randomElement([Customer::VERIFIED_USER, Customer::UNVERIFIED_USER]),
@@ -44,6 +47,7 @@ $factory->define(App\Agent::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'username' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => bcrypt('secret'),
         'verified' => $verified = $faker->randomElement([Agent::VERIFIED_USER, Agent::UNVERIFIED_USER]),

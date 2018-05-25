@@ -54,15 +54,15 @@ class EloquentUserRepository implements UserRepository
      * @param $data
      * @return mixed
      */
-    public function store($data)
+    public function store($request)
     {
-        $user = $this->user::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+        $data['verified'] = User::UNVERIFIED_USER;
+        $data['verification_token'] = User::generateVerificationCode();
+        $data['admin'] = User::REGULAR_USER;
 
-        // $user->curriculum()->attach($data['curriculum']);
+        $user = $this->user::create($data);
 
         return $user;
     }
@@ -77,16 +77,41 @@ class EloquentUserRepository implements UserRepository
 	{
         $user = $this->show($id);
 
-        $user->update([
-        	'username' => $request->username,
-        	'name' => $request->name,
-        	'email' => $request->email
-        ]);
-
-        if ($request->password != '') {
-            $user->password = bcrypt($request->password);
-            $user->save();
+        if ($request->has('first_name')) {
+            $user->first_name = $request->first_name;
         }
+
+        if ($request->has('last_name')) {
+            $user->last_name = $request->last_name;
+        }
+
+        if ($request->has('username')) {
+            $user->username = $request->username;
+        }
+
+        if ($request->has('email') && $user->email != $request->email) {
+            $user->verified = User::UNVERIFIED_USER;
+            $user->verification_token = User::generateVerificationCode();
+            $user->email = $request->email;
+        }
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        if ($request->has('admin')) {
+            if (!$user->isVerified()) {
+                return response()->json(['error' => 'Only verified users can modify the admin field', 'code' => 409], 409);
+            }
+
+            $user->admin = $request->admin;
+        }
+
+        if (!$user->isDirty()) {
+            return response()->json(['error' => 'You need to specify a different value to update', 'code' => 422], 422);
+        }
+
+        $user->save();
 
         return $user;
     }
@@ -98,7 +123,9 @@ class EloquentUserRepository implements UserRepository
      */
     public function destroy($id)
 	{
-		return $this->user::destroy($id);
+        $user = $this->show($id);
+
+		return $user->delete();
 	}
 
 }

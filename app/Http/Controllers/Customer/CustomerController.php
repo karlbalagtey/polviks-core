@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Contracts\CustomerRepository;
 use App\Http\Controllers\ApiController;
 
@@ -34,27 +35,6 @@ class CustomerController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -62,18 +42,40 @@ class CustomerController extends ApiController
      */
     public function show($id)
     {
-        //
+        $user = $this->user->show($id);
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show users by batch year
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showByBatch($id)
+    {
+        $users = $this->user->showByType($id);
+
+        return response()->json([
+            'data' => $users
+        ], 200);
+    }
+
+    /**
+     * Store the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function store(UserRequest $request)
     {
-        //
+        $user = $this->user->store($request);
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -83,9 +85,13 @@ class CustomerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user = $this->user->update($request, $id);
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -95,7 +101,11 @@ class CustomerController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $user = $this->user->destroy($id);
+        
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 }

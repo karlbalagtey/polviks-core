@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Contracts\UserRepository;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends ApiController
 {
@@ -19,7 +20,6 @@ class UserController extends ApiController
      */
     public function __construct(UserRepository $user)
     {
-        $this->middleware('client');
         $this->user = $user;
     }
 
@@ -30,7 +30,6 @@ class UserController extends ApiController
      */
     public function index()
     {
-        //
         $users = $this->user->index();
 
         return response()->json([
@@ -46,11 +45,11 @@ class UserController extends ApiController
      */
     public function show($id)
     {
-        //
         $user = $this->user->show($id);
 
-        return view('users.show', compact('user'));
-
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -62,22 +61,24 @@ class UserController extends ApiController
     {
         $users = $this->user->showByType($id);
 
-        return view('users.index', ['users' => $users]);
+        return response()->json([
+            'data' => $users
+        ], 200);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Store the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function store(UserRequest $request)
     {
-        $user = $this->user->show($id);
-        $curriculum = $this->class->index();
+        $user = $this->user->store($request);
 
-        return view('users.edit', ['user' => $user, 'curriculum' => $curriculum]);
-
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -89,12 +90,20 @@ class UserController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        $this->user->update($request, $id);
 
-        session()->flash('flash_message', 'Successfully updated user');
+        $user = $this->user->show($id);
 
-        return redirect('users');
+        Validator::make($request->all(), [
+            'email' => 'email|unique:users,email,' . $user->id,
+            'password' => 'min:6|confirmed',
+            'admin' => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
+        ])->validate();
 
+        $user = $this->user->update($request, $id);
+
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 
     /**
@@ -105,11 +114,10 @@ class UserController extends ApiController
      */
     public function destroy($id)
     {   
-        $this->user->destroy($id);
-
-        session()->flash('flash_message', 'User successfully deleted');
-
-        return redirect('users');    
-
+        $user = $this->user->destroy($id);
+        
+        return response()->json([
+            'data' => $user
+        ], 200);
     }
 }
