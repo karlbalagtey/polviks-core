@@ -26,3 +26,13 @@ Route::resource('customers', 'Customer\CustomerController');
  * Agents
  */
 Route::resource('agents', 'Agent\AgentController');
+
+/**
+ * Products
+ */
+Route::resource('products', 'Product\ProductController');
+
+/**
+ * Service
+ */
+Route::resource('services', 'Service\ServiceController');

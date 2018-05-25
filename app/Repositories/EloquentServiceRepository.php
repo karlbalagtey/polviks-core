@@ -2,22 +2,22 @@
 
 namespace App\Repositories;
 
-use App\Product;
-use App\Contracts\ProductRepository;
+use App\Service;
+use App\Contracts\ServiceRepository;
 
-class EloquentProductRepository implements ProductRepository
+class EloquentServiceRepository implements ServiceRepository
 {
 
-	protected $product;
+	protected $service;
 
     /**
      * Constructor injects Agent Model
-     * @param User       $product  User model
+     * @param User       $service  User model
      * @param Curriculum $class Curriculum
      */
-	public function __construct(Product $product)
+	public function __construct(Service $service)
 	{
-		$this->product = $product;
+		$this->service = $service;
 	}
 
     /**
@@ -26,7 +26,7 @@ class EloquentProductRepository implements ProductRepository
      */
     public function index()
 	{
-		return $this->product->all();
+		return $this->service->all();
 	}
 
     /**
@@ -36,7 +36,7 @@ class EloquentProductRepository implements ProductRepository
      */
     public function show($id)
 	{
-		return $this->product->where('id', $id)->first();
+		return $this->service->where('id', $id)->first();
 	}
 
     /**
@@ -50,45 +50,45 @@ class EloquentProductRepository implements ProductRepository
     }
 
     /**
-     * Creates new user and returns $product
+     * Creates new user and returns $service
      * @param $data
      * @return mixed
      */
     public function store($data)
     {
-        $product = $this->product::create([
+        $service = $this->service::create([
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
 
-        // $product->curriculum()->attach($data['curriculum']);
+        // $service->curriculum()->attach($data['curriculum']);
 
-        return $product;
+        return $service;
     }
 
     /**
-     * Updates user and returns $product
+     * Updates user and returns $service
      * @param $request
      * @param $id
      * @return mixed
      */
     public function update($request, $id)
 	{
-        $product = $this->show($id);
+        $service = $this->show($id);
 
-        $product->update([
-        	'username' => $request->productname,
+        $service->update([
+        	'username' => $request->servicename,
         	'name' => $request->name,
         	'email' => $request->email
         ]);
 
         if($request->password != ''){
-            $product->password = bcrypt($request->password);
-            $product->save();
+            $service->password = bcrypt($request->password);
+            $service->save();
         }
 
-        return $product;
+        return $service;
     }
 
     /**
@@ -98,7 +98,7 @@ class EloquentProductRepository implements ProductRepository
      */
     public function destroy($id)
 	{
-		return $this->product::destroy($id);
+		return $this->service::destroy($id);
 	}
 
 }

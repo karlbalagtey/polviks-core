@@ -37,5 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\Contracts\CustomerRepository', 'App\Repositories\EloquentCustomerRepository');
         $this->app->bind('App\Contracts\UserRepository', 'App\Repositories\EloquentUserRepository');
         $this->app->bind('App\Contracts\AgentRepository', 'App\Repositories\EloquentAgentRepository');
+        $this->app->bind('App\Contracts\ProductRepository', 'App\Repositories\EloquentProductRepository');
+        $this->app->bind('App\Contracts\ServiceRepository', 'App\Repositories\EloquentServiceRepository');
     }
 }

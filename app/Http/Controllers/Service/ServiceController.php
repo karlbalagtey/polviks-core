@@ -4,9 +4,22 @@ namespace App\Http\Controllers\Service;
 
 use App\Service;
 use Illuminate\Http\Request;
+use App\Contracts\ServiceRepository;
+use App\Http\Controllers\ApiController;
 
-class ServiceController extends Controller
+class ServiceController extends ApiController
 {
+    protected $service;
+
+    /**
+     * Constructor injected with Service Repository
+     * @param ServiceRepository $service with Eloquent
+     */
+    public function __construct(ServiceRepository $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,11 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $services = $this->service->index();
+
+        return response()->json([
+            'data' => $services
+        ], 200);
     }
 
     /**

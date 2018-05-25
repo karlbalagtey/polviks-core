@@ -4,9 +4,22 @@ namespace App\Http\Controllers\Product;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Contracts\ProductRepository;
+use App\Http\Controllers\ApiController;
 
-class ProductController extends Controller
+class ProductController extends ApiController
 {
+    protected $product;
+
+    /**
+     * Constructor injected with Admin User Repository
+     * @param UserRepository $product User repository with Eloquent
+     */
+    public function __construct(ProductRepository $product)
+    {
+        $this->product = $product;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->product->index();
+
+        return response()->json([
+            'data' => $products
+        ], 200);
     }
 
     /**
