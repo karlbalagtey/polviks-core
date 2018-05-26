@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Contracts\CustomerRepository;
@@ -12,8 +13,8 @@ class CustomerController extends ApiController
     protected $user;
 
     /**
-     * Constructor injected with Customer repository
-     * @param CustomerRepository $user Customer repository with Eloquent
+     * Constructor injected with Admin User Repository
+     * @param UserRepository $user User repository with Eloquent
      */
     public function __construct(CustomerRepository $user)
     {
@@ -27,11 +28,9 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        $users = $this->user->index();
+        $users = $this->user->hasTransactions();
 
-        return response()->json([
-            'data' => $users
-        ], 200);
+        return $this->showAll($users);
     }
 
     /**
@@ -44,11 +43,9 @@ class CustomerController extends ApiController
     {
         $user = $this->user->show($id);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user);
     }
-
+    
     /**
      * Show users by batch year
      * @param $id
@@ -85,13 +82,24 @@ class CustomerController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
+
+        $user = $this->user->show($id);
+
+        Validator::make($request->all(), [
+            'email' => 'email|unique:users,email,' . $user->id,
+            'password' => 'min:6|confirmed',
+            'admin' => 'in:' . Customer::ADMIN_USER . ',' . Customer::REGULAR_USER,
+        ])->validate();
+
         $user = $this->user->update($request, $id);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        if ( ! is_array(json_decode($user, true))) {
+            return $user;
+        }
+
+        return $this->showOne($user, 201);
     }
 
     /**

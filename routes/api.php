@@ -25,12 +25,12 @@ Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]
 /**
  * Customers
  */
-Route::resource('customers', 'Customer\CustomerController', ['only' => ['index', 'show']]);
+Route::resource('customers', 'Customer\CustomerController', ['except' => ['create', 'edit']]);
 
 /**
  * Agents
  */
-Route::resource('agents', 'Agent\AgentController', ['only' => ['index', 'show']]);
+Route::resource('agents', 'Agent\AgentController', ['except' => ['create', 'edit']]);
 
 /**
  * Categories

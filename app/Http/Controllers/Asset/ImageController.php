@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Asset;
 
 use App\Image;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 
-class ImageController extends Controller
+class ImageController extends ApiController
 {
     /**
      * Display a listing of the resource.

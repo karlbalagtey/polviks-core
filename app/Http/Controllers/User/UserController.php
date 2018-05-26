@@ -32,9 +32,7 @@ class UserController extends ApiController
     {
         $users = $this->user->index();
 
-        return response()->json([
-            'data' => $users
-        ], 200);
+        return $this->showAll($users);
     }
 
     /**
@@ -46,24 +44,8 @@ class UserController extends ApiController
     public function show($id)
     {
         $user = $this->user->show($id);
-
-        return response()->json([
-            'data' => $user
-        ], 200);
-    }
-
-    /**
-     * Show users by batch year
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showByBatch($id)
-    {
-        $users = $this->user->showByType($id);
-
-        return response()->json([
-            'data' => $users
-        ], 200);
+        
+        return $this->showOne($user);
     }
 
     /**
@@ -76,9 +58,7 @@ class UserController extends ApiController
     {
         $user = $this->user->store($request);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user, 201);
     }
 
     /**
@@ -101,9 +81,11 @@ class UserController extends ApiController
 
         $user = $this->user->update($request, $id);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        if ( ! is_array(json_decode($user, true))) {
+            return $user;
+        }
+
+        return $this->showOne($user, 201);
     }
 
     /**

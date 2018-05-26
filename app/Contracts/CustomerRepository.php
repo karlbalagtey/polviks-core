@@ -4,7 +4,9 @@ namespace App\Contracts;
 
 interface CustomerRepository
 {
-	public function index();
+	public function getAll();
+
+	public function hasTransactions();
 
 	public function show($id);
 

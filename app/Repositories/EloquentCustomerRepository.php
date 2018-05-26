@@ -3,31 +3,43 @@
 namespace App\Repositories;
 
 use App\Customer;
+use App\Traits\ApiResponser;
 use App\Contracts\CustomerRepository;
 
 class EloquentCustomerRepository implements CustomerRepository
 {
 
-	protected $user;
+    use ApiResponser;
+
+    protected $user;
 
     /**
-     * Constructor injects Customer Model
+     * Constructor injects Admin Users
      * @param User       $user  User model
      * @param Curriculum $class Curriculum
      */
-	public function __construct(Customer $user)
-	{
-		$this->user = $user;
-	}
+    public function __construct(Customer $user)
+    {
+        $this->user = $user;
+    }
 
     /**
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index()
-	{
-		return $this->user->all();
-	}
+    public function getAll()
+    {
+        return $this->user->all();
+    }
+
+    /**
+     * Returns all users with transactions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function hasTransactions()
+    {
+        return $this->user->has('transactions')->get();
+    }
 
     /**
      * Returns one user
@@ -35,18 +47,18 @@ class EloquentCustomerRepository implements CustomerRepository
      * @return mixed
      */
     public function show($id)
-	{
-		return $this->user->where('id', $id)->first();
-	}
+    {
+        return $this->user->has('transactions')->findOrfail($id);
+    }
 
     /**
      * Return user type
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-	public function showByType($id)
+    public function showByType($id)
     {
-
+        // return $this->curriculum->where('id', $id)->first()->users;
     }
 
     /**
@@ -54,17 +66,15 @@ class EloquentCustomerRepository implements CustomerRepository
      * @param $data
      * @return mixed
      */
-    public function store($data)
+    public function store($request)
     {
-        $user = $this->user::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $data = $request->all();
+        $data['password'] = bcrypt($request->password);
+        $data['verified'] = Customer::UNVERIFIED_USER;
+        $data['verification_token'] = Customer::generateVerificationCode();
+        $data['admin'] = Customer::REGULAR_USER;
 
-        // $user->curriculum()->attach($data['curriculum']);
+        $user = $this->user::create($data);
 
         return $user;
     }
@@ -76,30 +86,57 @@ class EloquentCustomerRepository implements CustomerRepository
      * @return mixed
      */
     public function update($request, $id)
-	{
+    {
         $user = $this->show($id);
 
-        $user->update([
-        	'username' => $request->username,
-        	'name' => $request->name,
-        	'email' => $request->email
-        ]);
-
-        if($request->password != ''){
-            $user->password = bcrypt($request->password);
-            $user->save();
+        if ($request->has('first_name')) {
+            $user->first_name = $request->first_name;
         }
+
+        if ($request->has('last_name')) {
+            $user->last_name = $request->last_name;
+        }
+
+        if ($request->has('username')) {
+            $user->username = $request->username;
+        }
+
+        if ($request->has('email') && $user->email != $request->email) {
+            $user->verified = Customer::UNVERIFIED_USER;
+            $user->verification_token = Customer::generateVerificationCode();
+            $user->email = $request->email;
+        }
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        if ($request->has('admin')) {
+            if (!$user->isVerified()) {
+                return response()->json(['error' => 'Only verified users can modify the admin field', 'code' => 409], 409);
+            }
+
+            $user->admin = $request->admin;
+        }
+
+        if (!$user->isDirty()) {
+            return response()->json(['error' => 'You need to specify a different value to update', 'code' => 422], 422);
+        }
+
+        $user->save();
 
         return $user;
     }
 
     /**
-     * Deletes user and returns result
+     * Deletes user
      * @param $id
      * @return int
      */
     public function destroy($id)
-	{
-		return $this->user::destroy($id);
-	}
+    {
+        $user = $this->show($id);
+
+        return $user->delete();
+    }
 }

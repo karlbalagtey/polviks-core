@@ -4,11 +4,9 @@ namespace App\Contracts;
 
 interface CategoryRepository
 {
-	public function index();
+	public function getAll();
 
 	public function show($id);
-
-	public function showByType($id);
 
 	public function update($request, $id);
 

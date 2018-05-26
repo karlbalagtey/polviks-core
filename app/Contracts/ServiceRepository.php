@@ -4,7 +4,7 @@ namespace App\Contracts;
 
 interface ServiceRepository
 {
-	public function index();
+	public function getAll();
 
 	public function show($id);
 

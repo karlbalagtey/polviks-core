@@ -24,7 +24,7 @@ class EloquentProductRepository implements ProductRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index()
+    public function getAll()
 	{
 		return $this->product->all();
 	}

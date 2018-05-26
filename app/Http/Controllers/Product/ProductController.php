@@ -27,11 +27,9 @@ class ProductController extends ApiController
      */
     public function index()
     {
-        $products = $this->product->index();
+        $products = $this->product->getAll();
 
-        return response()->json([
-            'data' => $products
-        ], 200);
+        return $this->showAll($users);
     }
 
     /**
@@ -51,9 +49,11 @@ class ProductController extends ApiController
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = $this->product->show($id);
+
+        return $this->showOne($product);
     }
 
     /**

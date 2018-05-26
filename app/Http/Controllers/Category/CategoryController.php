@@ -4,9 +4,22 @@ namespace App\Http\Controllers\Category;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Contracts\CategoryRepository;
+use App\Http\Controllers\ApiController;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
+    protected $category;
+
+    /**
+     * Constructor injected with Admin User Repository
+     * @param UserRepository $category User repository with Eloquent
+     */
+    public function __construct(CategoryRepository $category)
+    {
+        $this->category = $category;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = $this->category->getAll();
+
+        return $this->showAll($users);
     }
 
     /**

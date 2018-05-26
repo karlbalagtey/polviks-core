@@ -3,10 +3,13 @@
 namespace App\Repositories;
 
 use App\User;
+use App\Traits\ApiResponser;
 use App\Contracts\UserRepository;
 
 class EloquentUserRepository implements UserRepository
 {
+
+    use ApiResponser;
 
 	protected $user;
 
@@ -36,7 +39,7 @@ class EloquentUserRepository implements UserRepository
      */
     public function show($id)
 	{
-		return $this->user->where('id', $id)->first();
+		return $this->user->findOrfail($id);
 	}
 
     /**
@@ -101,14 +104,14 @@ class EloquentUserRepository implements UserRepository
 
         if ($request->has('admin')) {
             if (!$user->isVerified()) {
-                return response()->json(['error' => 'Only verified users can modify the admin field', 'code' => 409], 409);
+                return $this->errorResponse('Only verified users can modify the admin field', 409);
             }
 
             $user->admin = $request->admin;
         }
 
         if (!$user->isDirty()) {
-            return response()->json(['error' => 'You need to specify a different value to update', 'code' => 422], 422);
+            return $this->errorResponse('You need to specify a different value to update', 422);
         }
 
         $user->save();

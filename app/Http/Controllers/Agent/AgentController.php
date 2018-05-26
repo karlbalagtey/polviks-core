@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Agent;
 
+use App\Agent;
 use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
 use App\Http\Requests\UserRequest;
@@ -9,17 +10,15 @@ use App\Http\Controllers\ApiController;
 
 class AgentController extends ApiController
 {
-
     protected $user;
 
     /**
-     * Constructor inject Agent Repository
-     * @param AgentRepository $agent Agent Repository with EloquentAgentRepository
+     * Constructor injected with Admin User Repository
+     * @param UserRepository $user User repository with Eloquent
      */
-    public function __construct(AgentRepository $agent)
+    public function __construct(AgentRepository $user)
     {
-        $this->middleware('client');
-        $this->user = $agent;
+        $this->user = $user;
     }
 
     /**
@@ -29,11 +28,9 @@ class AgentController extends ApiController
      */
     public function index()
     {
-        $users = $this->user->index();
+        $users = $this->user->hasProducts();
 
-        return response()->json([
-            'data' => $users
-        ], 200);
+        return $this->showAll($users);
     }
 
     /**
@@ -46,9 +43,7 @@ class AgentController extends ApiController
     {
         $user = $this->user->show($id);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user);
     }
 
     /**
@@ -87,13 +82,24 @@ class AgentController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
+
+        $user = $this->user->show($id);
+
+        Validator::make($request->all(), [
+            'email' => 'email|unique:users,email,' . $user->id,
+            'password' => 'min:6|confirmed',
+            'admin' => 'in:' . Agent::ADMIN_USER . ',' . Agent::REGULAR_USER,
+        ])->validate();
+
         $user = $this->user->update($request, $id);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        if ( ! is_array(json_decode($user, true))) {
+            return $user;
+        }
+
+        return $this->showOne($user, 201);
     }
 
     /**

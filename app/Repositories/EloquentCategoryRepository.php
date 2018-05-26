@@ -24,7 +24,7 @@ class EloquentCategoryRepository implements CategoryRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index()
+    public function getAll()
 	{
 		return $this->category->all();
 	}

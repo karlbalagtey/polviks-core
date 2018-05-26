@@ -4,7 +4,11 @@ namespace App\Contracts;
 
 interface AgentRepository
 {
-	public function index();
+	public function getAll();
+
+	public function hasProducts();
+
+	public function hasServices();
 
 	public function show($id);
 

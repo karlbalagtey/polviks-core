@@ -27,11 +27,9 @@ class ServiceController extends ApiController
      */
     public function index()
     {
-        $services = $this->service->index();
+        $services = $this->service->getAll();
 
-        return response()->json([
-            'data' => $services
-        ], 200);
+        return $this->showAll($services);
     }
 
     /**
@@ -51,9 +49,11 @@ class ServiceController extends ApiController
      * @param  \App\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show(Service $service)
+    public function show($id)
     {
-        //
+        $service = $this->product->show($id);
+
+        return $this->showAll($service);
     }
 
     /**

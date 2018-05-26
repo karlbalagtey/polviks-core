@@ -45,6 +45,41 @@ class User extends Authenticatable
         'verification_token',
     ];
 
+    public function setUsernameAttribute($username)
+    {
+        $this->attributes['username'] = strtolower($username);
+    }
+
+    public function getUsernameAttribute($username)
+    {
+        return ucwords($username);
+    }
+    
+    public function setFirstNameAttribute($firstname)
+    {
+        $this->attributes['first_name'] = strtolower($firstname);
+    }
+
+    public function getFirstNameAttribute($firstname)
+    {
+        return ucwords($firstname);
+    }
+    
+    public function setLastNameAttribute($lastname)
+    {
+        $this->attributes['last_name'] = strtolower($lastname);
+    }
+
+    public function getLastNameAttribute($lastname)
+    {
+        return ucwords($lastname);
+    }
+
+    public function setEmailAttribute($email)
+    {
+        $this->attributes['email'] = strtolower($email);
+    }
+
     public function isVerified()
     {
         return $this->verified == User::VERIFIED_USER;

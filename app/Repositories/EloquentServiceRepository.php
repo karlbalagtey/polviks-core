@@ -24,7 +24,7 @@ class EloquentServiceRepository implements ServiceRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function index()
+    public function getAll()
 	{
 		return $this->service->all();
 	}
