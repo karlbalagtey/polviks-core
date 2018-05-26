@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Image;
 use Illuminate\Database\Seeder;
 
 class ImagesTableSeeder extends Seeder
@@ -11,6 +12,6 @@ class ImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Image::class, 200)->create();
+        factory(Image::class, 200)->create();
     }
 }

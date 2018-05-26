@@ -92,13 +92,15 @@ class EloquentCategoryRepository implements CategoryRepository
     }
 
     /**
-     * Deletes user
+     * Deletes category
      * @param $id
      * @return int
      */
     public function destroy($id)
 	{
-		return $this->category::destroy($id);
-	}
+        $category = $this->show($id);
+        $category->delete();
 
+		return $category;
+	}
 }

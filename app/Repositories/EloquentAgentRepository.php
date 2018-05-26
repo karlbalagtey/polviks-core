@@ -145,8 +145,8 @@ class EloquentAgentRepository implements AgentRepository
     public function destroy($id)
     {
         $user = $this->show($id);
+        $user->delete();
 
-        return $user->delete();
+        return $user;
     }
-
 }

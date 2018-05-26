@@ -36,9 +36,18 @@ class EloquentCustomerRepository implements CustomerRepository
      * Returns all users with transactions
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function hasTransactions()
+    public function hasProductTransactions()
     {
-        return $this->user->has('transactions')->get();
+        return $this->user->has('productTransactions')->get();
+    }
+
+    /**
+     * Returns all users with transactions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function hasServiceTransactions()
+    {
+        return $this->user->has('serviceTransactions')->get();
     }
 
     /**
@@ -48,7 +57,27 @@ class EloquentCustomerRepository implements CustomerRepository
      */
     public function show($id)
     {
-        return $this->user->has('transactions')->findOrfail($id);
+        return $this->user->findOrfail($id);
+    }
+
+    /**
+     * Returns one user with product transaction
+     * @param $id
+     * @return mixed
+     */
+    public function showOneWithProductTransaction($id)
+    {
+        return $this->user->has('productTransactions')->findOrfail($id);
+    }
+
+    /**
+     * Returns one user with product transaction
+     * @param $id
+     * @return mixed
+     */
+    public function showOneWithServiceTransaction($id)
+    {
+        return $this->user->has('serviceTransactions')->findOrfail($id);
     }
 
     /**
@@ -136,7 +165,8 @@ class EloquentCustomerRepository implements CustomerRepository
     public function destroy($id)
     {
         $user = $this->show($id);
+        $user->delete();
 
-        return $user->delete();
+        return $user;
     }
 }

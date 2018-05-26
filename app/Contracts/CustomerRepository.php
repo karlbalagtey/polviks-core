@@ -6,9 +6,15 @@ interface CustomerRepository
 {
 	public function getAll();
 
-	public function hasTransactions();
+	public function hasProductTransactions();
+
+	public function hasServiceTransactions();
 
 	public function show($id);
+
+	public function showOneWithProductTransaction($id);
+
+	public function showOneWithServiceTransaction($id);
 
 	public function store($request);
 

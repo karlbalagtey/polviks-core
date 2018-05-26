@@ -53,9 +53,14 @@ class Customer extends Authenticatable
         return $this->verified == Agent::VERIFIED_USER;
     }
 
-    public function transactions()
+    public function productTransactions()
     {
-    	return $this->hasMany(Transaction::class);
+    	return $this->hasMany(ProductTransaction::class);
+    }
+
+    public function serviceTransactions()
+    {
+        return $this->hasMany(ServiceTransaction::class);
     }
 
     public static function generateVerificationCode()

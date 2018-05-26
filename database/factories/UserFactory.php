@@ -1,8 +1,8 @@
 <?php
 
-use App\User;
-use App\Agent;
-use App\Customer;
+use App\Models\User;
+use App\Models\Agent;
+use App\Models\Customer;
 use Faker\Generator as Faker;
 
 /*
@@ -16,7 +16,7 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
@@ -30,7 +30,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Customer::class, function (Faker $faker) {
+$factory->define(Customer::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
@@ -43,7 +43,7 @@ $factory->define(App\Customer::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Agent::class, function (Faker $faker) {
+$factory->define(Agent::class, function (Faker $faker) {
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,

@@ -13,7 +13,8 @@ class DatabaseSeeder extends Seeder
         'products',
         'services',
         'roles',
-        'transactions'
+        'product_transactions',
+        'service_transactions'
     ];
 
     /**

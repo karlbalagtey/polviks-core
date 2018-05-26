@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Agent;
 use App\Models\Category;
-use App\Models\Transaction;
+use App\Models\ServiceTransaction;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
@@ -34,7 +34,7 @@ class Service extends Model
 
     public function transactions()
     {
-    	return $this->hasMany(Transaction::class);
+    	return $this->hasMany(ServiceTransaction::class);
     }
 
     public function categories()

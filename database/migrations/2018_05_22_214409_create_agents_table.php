@@ -1,6 +1,6 @@
 <?php
 
-use App\Agent;
+use App\Models\Agent;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -26,6 +26,7 @@ class CreateAgentsTable extends Migration
             $table->string('verification_token')->nullable();
             $table->string('admin')->default(Agent::REGULAR_USER);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

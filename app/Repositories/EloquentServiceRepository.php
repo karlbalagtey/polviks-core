@@ -92,13 +92,16 @@ class EloquentServiceRepository implements ServiceRepository
     }
 
     /**
-     * Deletes user
+     * Deletes service
      * @param $id
      * @return int
      */
     public function destroy($id)
 	{
-		return $this->service::destroy($id);
+        $service = $this->show($id);
+        $service->delete();
+
+		return $service;
 	}
 
 }

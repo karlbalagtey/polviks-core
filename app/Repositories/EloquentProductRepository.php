@@ -92,13 +92,15 @@ class EloquentProductRepository implements ProductRepository
     }
 
     /**
-     * Deletes user
+     * Deletes product
      * @param $id
      * @return int
      */
     public function destroy($id)
 	{
-		return $this->product::destroy($id);
-	}
+        $product = $this->show($id);
+        $product->delete();
 
+		return $product;
+	}
 }

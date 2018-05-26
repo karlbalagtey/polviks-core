@@ -1,6 +1,6 @@
 <?php
 
-use App\Customer;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -25,6 +25,7 @@ class CreateCustomersTable extends Migration
             $table->string('verified')->default(Customer::UNVERIFIED_USER);
             $table->string('verification_token')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

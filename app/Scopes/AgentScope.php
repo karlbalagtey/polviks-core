@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Builder;
 
-class CustomerScope implements Scope
+class AgentScope implements Scope
 {
 	public function apply(Builder $builder, Model $model)
 	{
-		$builder->has('serviceTransactions');
+		$builder->has('services');
 	}
 }

@@ -28,7 +28,7 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        $users = $this->user->hasTransactions();
+        $users = $this->user->getAll();
 
         return $this->showAll($users);
     }
@@ -41,23 +41,9 @@ class CustomerController extends ApiController
      */
     public function show($id)
     {
-        $user = $this->user->show($id);
+        $user = $this->user->showOneWithProductTransaction($id);
 
         return $this->showOne($user);
-    }
-    
-    /**
-     * Show users by batch year
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showByBatch($id)
-    {
-        $users = $this->user->showByType($id);
-
-        return response()->json([
-            'data' => $users
-        ], 200);
     }
 
     /**

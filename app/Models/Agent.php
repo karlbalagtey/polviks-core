@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Product;
 use App\Models\Service;
+use App\Scopes\AgentScope;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +45,13 @@ class Agent extends Authenticatable
         'remember_token',
         'verification_token',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new AgentScope);
+    }
 
     public function isVerified()
     {

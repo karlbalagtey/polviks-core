@@ -1,6 +1,6 @@
 <?php
 
-use App\Product;
+use App\Models\Product;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->foreign('agent_id')->references('id')->on('agents');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
