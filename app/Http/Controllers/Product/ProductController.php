@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Product;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Contracts\ProductRepository;
 use App\Http\Controllers\ApiController;
@@ -29,7 +29,7 @@ class ProductController extends ApiController
     {
         $products = $this->product->getAll();
 
-        return $this->showAll($users);
+        return $this->showAll($products);
     }
 
     /**

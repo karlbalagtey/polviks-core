@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Customer;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Contracts\CustomerRepository;

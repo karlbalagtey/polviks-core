@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Service;
 
-use App\Service;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Contracts\ServiceRepository;
 use App\Http\Controllers\ApiController;
@@ -51,9 +51,9 @@ class ServiceController extends ApiController
      */
     public function show($id)
     {
-        $service = $this->product->show($id);
+        $service = $this->service->show($id);
 
-        return $this->showAll($service);
+        return $this->showOne($service);
     }
 
     /**

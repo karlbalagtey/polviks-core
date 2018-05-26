@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Transaction;
+use App\Models\Transaction;
+use App\Scopes\CustomerScope;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -39,6 +40,13 @@ class Customer extends Authenticatable
         'remember_token',
         'verification_token',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new CustomerScope);
+    }
 
     public function isVerified()
     {

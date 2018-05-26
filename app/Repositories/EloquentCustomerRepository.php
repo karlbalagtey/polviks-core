@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Customer;
+use App\Models\Customer;
 use App\Traits\ApiResponser;
 use App\Contracts\CustomerRepository;
 

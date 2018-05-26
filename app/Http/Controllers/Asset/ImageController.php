@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Asset;
 
-use App\Image;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 

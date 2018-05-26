@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Product;
+use App\Models\Product;
 use App\Contracts\ProductRepository;
 
 class EloquentProductRepository implements ProductRepository

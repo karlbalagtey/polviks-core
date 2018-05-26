@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Agent;
-use App\Category;
-use App\Transaction;
+use App\Models\Agent;
+use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Service extends Model
 {
 	const AVAILABLE_PRODUCT = 'available';
 	const UNAVAILABLE_PRODUCT = 'unavailable';
@@ -24,7 +24,7 @@ class Product extends Model
 
     public function isAvailable()
     {
-    	return $this->status == Product::AVAILABLE_PRODUCT;
+    	return $this->status == Service::AVAILABLE_PRODUCT;
     }
 
     public function agent()

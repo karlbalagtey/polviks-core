@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Traits\Slugable;
 use App\Traits\PermissionHasRelations;

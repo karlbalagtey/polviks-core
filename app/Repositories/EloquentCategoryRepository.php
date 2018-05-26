@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Agent;
+use App\Models\Category;
 use App\Contracts\CategoryRepository;
 
 class EloquentCategoryRepository implements CategoryRepository
@@ -11,7 +11,7 @@ class EloquentCategoryRepository implements CategoryRepository
 	protected $category;
 
     /**
-     * Constructor injects Agent Model
+     * Constructor injects Category Model
      * @param User       $category  User model
      * @param Curriculum $class Curriculum
      */

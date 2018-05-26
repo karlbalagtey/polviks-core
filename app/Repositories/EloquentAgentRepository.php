@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Agent;
+use App\Models\Agent;
 use App\Traits\ApiResponser;
 use App\Contracts\AgentRepository;
 

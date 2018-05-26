@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Agent;
 
-use App\Agent;
+use App\Models\Agent;
 use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
 use App\Http\Requests\UserRequest;
