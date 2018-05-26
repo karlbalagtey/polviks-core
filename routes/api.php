@@ -35,12 +35,12 @@ Route::resource('agents', 'Agent\AgentController', ['except' => ['create', 'edit
 /**
  * Categories
  */
-Route::resource('categories', 'Service\ServiceController', ['except' => ['create', 'edit']]);
+Route::resource('categories', 'Service\ServiceController', ['only' => ['index', 'show']]);
 
 /**
  * Products
  */
-Route::resource('products', 'Product\ProductController', ['only' => ['index', 'show']]);
+Route::resource('products', 'Product\ProductController', ['except' => ['create', 'edit']]);
 
 /**
  * Service
