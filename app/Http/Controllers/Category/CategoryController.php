@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Contracts\CategoryRepository;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends ApiController
 {
@@ -29,7 +30,7 @@ class CategoryController extends ApiController
     {
         $categories = $this->category->getAll();
 
-        return $this->showAll($users);
+        return $this->showAll($categories);
     }
 
     /**
@@ -40,7 +41,14 @@ class CategoryController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required|unique:categories',
+            'description' => 'required',
+        ])->validate();
+        
+        $category = $this->category->store($request);
+
+        return $this->showOne($category, 201);
     }
 
     /**
@@ -49,9 +57,11 @@ class CategoryController extends ApiController
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        //
+        $category = $this->category->show($id);
+
+        return $this->showOne($category);
     }
 
     /**
@@ -61,7 +71,7 @@ class CategoryController extends ApiController
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -72,7 +82,7 @@ class CategoryController extends ApiController
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
     }

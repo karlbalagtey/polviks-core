@@ -56,9 +56,7 @@ class CustomerController extends ApiController
     {
         $user = $this->user->store($request);
 
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user, 201);
     }
 
     /**

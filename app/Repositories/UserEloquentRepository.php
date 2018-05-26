@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Traits\ApiResponser;
 use App\Contracts\UserRepository;
 
-class EloquentUserRepository implements UserRepository
+class UserEloquentRepository implements UserRepository
 {
 
     use ApiResponser;
@@ -47,9 +47,9 @@ class EloquentUserRepository implements UserRepository
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-	public function showByType($id)
+    public function showBySlug($slug)
     {
-        // return $this->curriculum->where('id', $id)->first()->users;
+        return $this->user->where('slug', $slug)->first();
     }
 
     /**

@@ -12,13 +12,13 @@ interface CustomerRepository
 
 	public function show($id);
 
+	public function showBySlug($slug);
+
 	public function showOneWithProductTransaction($id);
 
 	public function showOneWithServiceTransaction($id);
 
 	public function store($request);
-
-	public function showByType($id);
 
 	public function update($request, $id);
 

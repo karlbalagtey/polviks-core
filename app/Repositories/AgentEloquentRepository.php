@@ -6,7 +6,7 @@ use App\Models\Agent;
 use App\Traits\ApiResponser;
 use App\Contracts\AgentRepository;
 
-class EloquentAgentRepository implements AgentRepository
+class AgentEloquentRepository implements AgentRepository
 {
 
     use ApiResponser;
@@ -65,9 +65,9 @@ class EloquentAgentRepository implements AgentRepository
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function showByType($id)
+    public function showBySlug($slug)
     {
-        // return $this->curriculum->where('id', $id)->first()->users;
+        return $this->user->where('slug', $slug)->first();
     }
 
     /**

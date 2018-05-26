@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Service;
 use App\Contracts\ServiceRepository;
 
-class EloquentServiceRepository implements ServiceRepository
+class ServiceEloquentRepository implements ServiceRepository
 {
 
 	protected $service;
@@ -40,13 +40,13 @@ class EloquentServiceRepository implements ServiceRepository
 	}
 
     /**
-     * Return user type
+     * Return service via slug
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-	public function showByType($id)
+    public function showBySlug($slug)
     {
-        // return $this->curriculum->where('id', $id)->first()->user;
+        return $this->service->where('slug', $slug)->first();
     }
 
     /**

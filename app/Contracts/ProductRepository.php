@@ -8,7 +8,7 @@ interface ProductRepository
 
 	public function show($id);
 
-	public function showByType($id);
+	public function showBySlug($slug);
 
 	public function update($request, $id);
 

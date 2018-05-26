@@ -8,9 +8,11 @@ interface CategoryRepository
 
 	public function show($id);
 
+	public function showBySlug($slug);
+
 	public function update($request, $id);
 
 	public function destroy($id);
 
-	public function store($data);
+	public function store($request);
 }

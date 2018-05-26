@@ -35,7 +35,7 @@ Route::resource('agents', 'Agent\AgentController', ['except' => ['create', 'edit
 /**
  * Categories
  */
-Route::resource('categories', 'Service\ServiceController', ['only' => ['index', 'show']]);
+Route::resource('categories', 'Category\CategoryController');
 
 /**
  * Products

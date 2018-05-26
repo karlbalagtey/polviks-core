@@ -24,20 +24,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $models = array(
-        //     'User',
-        //     'Customer',
-        //     'Agent'
-        // );
+        $models = array(
+            'Customer',
+            'User',
+            'Agent',
+            'Product',
+            'Service',
+            'Category',
+        );
 
-        // foreach ($models as $model) {
-        //     $this->app->bind('App\Contracts\{$model}Repository', 'App\Repositories\Eloquent{$model}Repository');
-        // }
-
-        $this->app->bind('App\Contracts\CustomerRepository', 'App\Repositories\EloquentCustomerRepository');
-        $this->app->bind('App\Contracts\UserRepository', 'App\Repositories\EloquentUserRepository');
-        $this->app->bind('App\Contracts\AgentRepository', 'App\Repositories\EloquentAgentRepository');
-        $this->app->bind('App\Contracts\ProductRepository', 'App\Repositories\EloquentProductRepository');
-        $this->app->bind('App\Contracts\ServiceRepository', 'App\Repositories\EloquentServiceRepository');
+        foreach ($models as $model) {
+            $this->app->bind("App\Contracts\\{$model}Repository", "App\Repositories\\{$model}EloquentRepository");
+        }
     }
 }

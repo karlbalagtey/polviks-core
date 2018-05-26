@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Category;
 use App\Contracts\CategoryRepository;
 
-class EloquentCategoryRepository implements CategoryRepository
+class CategoryEloquentRepository implements CategoryRepository
 {
 
 	protected $category;
@@ -36,17 +36,17 @@ class EloquentCategoryRepository implements CategoryRepository
      */
     public function show($id)
 	{
-		return $this->category->where('id', $id)->first();
+		return $this->category->findOrfail($id);
 	}
 
     /**
-     * Return user type
+     * Return category via slug
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-	public function showByType($id)
+    public function showBySlug($slug)
     {
-        // return $this->curriculum->where('id', $id)->first()->user;
+        return $this->category->where('slug', $slug)->first();
     }
 
     /**
@@ -54,15 +54,9 @@ class EloquentCategoryRepository implements CategoryRepository
      * @param $data
      * @return mixed
      */
-    public function store($data)
+    public function store($request)
     {
-        $category = $this->category::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-
-        // $category->curriculum()->attach($data['curriculum']);
+        $category = $this->category::create($request->all());
 
         return $category;
     }

@@ -6,7 +6,7 @@ use App\Models\Customer;
 use App\Traits\ApiResponser;
 use App\Contracts\CustomerRepository;
 
-class EloquentCustomerRepository implements CustomerRepository
+class CustomerEloquentRepository implements CustomerRepository
 {
 
     use ApiResponser;
@@ -58,6 +58,16 @@ class EloquentCustomerRepository implements CustomerRepository
     public function show($id)
     {
         return $this->user->findOrfail($id);
+    }
+
+    /**
+     * Return user via slug
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function showBySlug($slug)
+    {
+        return $this->user->where('slug', $slug)->first();
     }
 
     /**

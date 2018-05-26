@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Product;
 use App\Contracts\ProductRepository;
 
-class EloquentProductRepository implements ProductRepository
+class ProductEloquentRepository implements ProductRepository
 {
 
 	protected $product;
@@ -36,17 +36,17 @@ class EloquentProductRepository implements ProductRepository
      */
     public function show($id)
 	{
-		return $this->product->where('id', $id)->first();
+		return $this->product->findOrfail($id);
 	}
 
     /**
-     * Return user type
+     * Return product via slug
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-	public function showByType($id)
+    public function showBySlug($slug)
     {
-        // return $this->curriculum->where('id', $id)->first()->user;
+        return $this->product->where('slug', $slug)->first();
     }
 
     /**
