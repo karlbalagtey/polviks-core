@@ -3,10 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Traits\ApiResponser;
 use App\Contracts\CategoryRepository;
 
 class CategoryEloquentRepository implements CategoryRepository
 {
+    use ApiResponser;
 
 	protected $category;
 
@@ -71,16 +73,16 @@ class CategoryEloquentRepository implements CategoryRepository
 	{
         $category = $this->show($id);
 
-        $category->update([
-        	'username' => $request->categoryname,
-        	'name' => $request->name,
-        	'email' => $request->email
-        ]);
+        $category->fill($request->only([
+        	'name',
+        	'description',
+        ]));
 
-        if($request->password != ''){
-            $category->password = bcrypt($request->password);
-            $category->save();
+        if ($category->isClean()) {
+            return $this->errorResponse('You need to change the values to update', 422);
         }
+
+        $category->save();
 
         return $category;
     }
@@ -95,6 +97,6 @@ class CategoryEloquentRepository implements CategoryRepository
         $category = $this->show($id);
         $category->delete();
 
-		return $category;
+		return $this->showOne($category);
 	}
 }

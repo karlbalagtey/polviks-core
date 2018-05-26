@@ -73,7 +73,9 @@ class CategoryController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = $this->category->update($request, $id);
+
+        return $this->showOne($category);
     }
 
     /**
@@ -84,6 +86,8 @@ class CategoryController extends ApiController
      */
     public function destroy($id)
     {
-        //
+        $category = $this->category->destroy($id);
+
+        return $category;
     }
 }

@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
             'Product',
             'Service',
             'Category',
+            'ServiceTransaction'
         );
 
         foreach ($models as $model) {

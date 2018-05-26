@@ -36,7 +36,7 @@ class ServiceEloquentRepository implements ServiceRepository
      */
     public function show($id)
 	{
-		return $this->service->where('id', $id)->first();
+		return $this->service->findOrfail($id);
 	}
 
     /**

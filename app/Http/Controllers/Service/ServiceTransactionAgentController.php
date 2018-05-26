@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Service;
 
 use Illuminate\Http\Request;
-use App\Contracts\ServiceRepository;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
+use App\Contracts\ServiceTransactionRepository;
 
-class ServiceController extends ApiController
+class ServiceTransactionAgentController extends ApiController
 {
-    protected $service;
+    protected $transaction;
 
     /**
-     * Constructor injected with Service Repository
-     * @param ServiceRepository $service with Eloquent
+     * Constructor injected with Service Transaction Repository
+     * @param ServiceTransactionRepository $transaction
      */
-    public function __construct(ServiceRepository $service)
+    public function __construct(ServiceTransactionRepository $transaction)
     {
-        $this->service = $service;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -24,11 +25,11 @@ class ServiceController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $services = $this->service->getAll();
+        $agent = $this->transaction->getAgent($id);
 
-        return $this->showAll($services);
+        return $this->showOne($agent);
     }
 
     /**
@@ -45,21 +46,19 @@ class ServiceController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Service  $service
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $service = $this->service->show($id);
-
-        return $this->showOne($service);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Service  $service
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -70,10 +69,10 @@ class ServiceController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Service  $service
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Service $service)
+    public function destroy($id)
     {
         //
     }

@@ -96,8 +96,6 @@ class CustomerController extends ApiController
     {   
         $user = $this->user->destroy($id);
         
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user);
     }
 }

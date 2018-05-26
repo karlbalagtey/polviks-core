@@ -22,8 +22,12 @@ trait ApiResponser
 		return $this->successResponse(['data' => $collection], $code);
 	}
 
-	protected function showOne(Model $model, $code = 200)
+	protected function showOne($model, $code = 200)
 	{
+        if ( ! is_array(json_decode($model, true))) {
+            return $model;
+        }
+
 		return $this->successResponse(['data' => $model], $code);
 	}
 }

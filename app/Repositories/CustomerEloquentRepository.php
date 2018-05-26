@@ -33,6 +33,116 @@ class CustomerEloquentRepository implements CustomerRepository
     }
 
     /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAllProducts($id)
+    {
+        $user = $this->show($id);
+
+        return $user->productTransactions()->with('product')
+            ->get()
+            ->pluck('product');
+    }
+
+    /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAllServices($id)
+    {   
+        $user = $this->show($id);
+
+        return $user->serviceTransactions()->with('service')
+            ->get()
+            ->pluck('service');
+    }
+
+    /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAllServiceCategories($id)
+    {   
+        $user = $this->show($id);
+
+        return $user->serviceTransactions()->with('service.categories')
+            ->get()
+            ->pluck('service.categories')
+            ->collapse()
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAllProductCategories($id)
+    {   
+        $user = $this->show($id);
+
+        return $user->productTransactions()->with('product.categories')
+            ->get()
+            ->pluck('product.categories')
+            ->collapse()
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAllServiceAgents($id)
+    {   
+        $user = $this->show($id);
+
+        return $user->serviceTransactions()->with('service.agent')
+            ->get()
+            ->pluck('service.agent')
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAllProductAgents($id)
+    {   
+        $user = $this->show($id);
+
+        return $user->productTransactions()->with('product.agent')
+            ->get()
+            ->pluck('product.agent')
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Returns customer's service transactions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getServiceTransactions($id)
+    {
+        $customer = $this->show($id);
+
+        return $customer->serviceTransactions;
+    }
+
+    /**
+     * Returns customer's product transactions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getProductTransactions($id)
+    {
+        $customer = $this->show($id);
+
+        return $customer->productTransactions;
+    }
+
+    /**
      * Returns all users with transactions
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */

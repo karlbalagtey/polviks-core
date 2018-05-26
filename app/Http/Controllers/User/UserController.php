@@ -80,11 +80,7 @@ class UserController extends ApiController
         ])->validate();
 
         $user = $this->user->update($request, $id);
-
-        if ( ! is_array(json_decode($user, true))) {
-            return $user;
-        }
-
+        
         return $this->showOne($user, 201);
     }
 
@@ -98,8 +94,6 @@ class UserController extends ApiController
     {   
         $user = $this->user->destroy($id);
         
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user);
     }
 }

@@ -26,6 +26,14 @@ Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]
  * Customers
  */
 Route::resource('customers', 'Customer\CustomerController', ['except' => ['create', 'edit']]);
+Route::get('customers/{id}/product/transactions', 'Customer\CustomerTransactionController@product');
+Route::get('customers/{id}/service/transactions', 'Customer\CustomerTransactionController@service');
+Route::get('customers/{id}/product/agents', 'Customer\CustomerAgentController@product');
+Route::get('customers/{id}/service/agents', 'Customer\CustomerAgentController@service');
+Route::get('customers/{id}/products', 'Customer\CustomerProductController@index');
+Route::get('customers/{id}/services', 'Customer\CustomerServiceController@index');
+Route::get('customers/{id}/services/categories', 'Customer\CustomerCategoryController@service');
+Route::get('customers/{id}/products/categories', 'Customer\CustomerCategoryController@product');
 
 /**
  * Agents
@@ -46,3 +54,5 @@ Route::resource('products', 'Product\ProductController', ['except' => ['create',
  * Service
  */
 Route::resource('services', 'Service\ServiceController', ['only' => ['index', 'show']]);
+Route::resource('services-transactions.categories', 'Service\ServiceTransactionCategoryController', ['only' => ['index']]);
+Route::resource('services-transactions.agents', 'Service\ServiceTransactionAgentController', ['only' => ['index']]);
