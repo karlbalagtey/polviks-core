@@ -60,6 +60,7 @@ Route::resource('products', 'Product\ProductController', ['except' => ['create',
 Route::resource('products.transactions', 'Product\ProductTransactionController', ['only' => ['index']]);
 Route::resource('products.customers', 'Product\ProductCustomerController', ['only' => ['index']]);
 Route::resource('products.categories', 'Product\ProductCategoryController', ['only' => ['index', 'update', 'destroy']]);
+Route::resource('products.customers.transactions', 'Product\ProductCustomerTransactionController', ['only' => ['store']]);
 
 /**
  * Service
@@ -68,4 +69,4 @@ Route::resource('services', 'Service\ServiceController', ['only' => ['index', 's
 Route::resource('services.transactions', 'Service\ServiceTransactionController', ['only' => ['index']]);
 Route::resource('services.categories', 'Service\ServiceCategoryController', ['only' => ['index', 'update', 'destroy']]);
 Route::resource('services-transactions.categories', 'Service\ServiceTransactionCategoryController', ['only' => ['index']]);
-Route::resource('services-transactions.agents', 'Service\ServiceTransactionAgentController', ['only' => ['index']]);
+Route::resource('services.customers.transactions', 'Service\ServiceCustomerTransactionController', ['only' => ['store']]);
