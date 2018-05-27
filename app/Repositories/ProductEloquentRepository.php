@@ -3,10 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use App\Traits\ApiResponser;
 use App\Contracts\ProductRepository;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ProductEloquentRepository implements ProductRepository
 {
+    use ApiResponser;
 
 	protected $product;
 
@@ -34,10 +37,24 @@ class ProductEloquentRepository implements ProductRepository
      * @param $id
      * @return mixed
      */
-    public function show($id)
+    public function show($product_id)
 	{
-		return $this->product->findOrfail($id);
+        return $this->product->findOrfail($product_id);
 	}
+
+    /**
+     * Returns one user
+     * @param $id
+     * @return mixed
+     */
+    public function getAgentProduct($agent_id, $product_id)
+    {
+        $product = $this->product->findOrfail($product_id);
+
+        $this->checkAgent($agent_id, $product);
+
+        return $product;
+    }
 
     /**
      * Return product via slug
@@ -54,15 +71,14 @@ class ProductEloquentRepository implements ProductRepository
      * @param $data
      * @return mixed
      */
-    public function store($data)
+    public function store($request, $id)
     {
-        $product = $this->product::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $data = $request->all();
 
-        // $product->curriculum()->attach($data['curriculum']);
+        $data['status'] = Product::UNAVAILABLE_PRODUCT;
+        $data['agent_id'] = $id;
+
+        $product = Product::create($data);
 
         return $product;
     }
@@ -73,20 +89,29 @@ class ProductEloquentRepository implements ProductRepository
      * @param $id
      * @return mixed
      */
-    public function update($request, $id)
+    public function update($agent_id, $product_id, $request)
 	{
-        $product = $this->show($id);
+        $product = $this->getAgentProduct($agent_id, $product_id);
 
-        $product->update([
-        	'username' => $request->productname,
-        	'name' => $request->name,
-        	'email' => $request->email
-        ]);
+        $product->fill($request->only([
+        	'name',
+        	'description',
+        	'quantity',
+        ]));
 
-        if($request->password != ''){
-            $product->password = bcrypt($request->password);
-            $product->save();
+        if ($request->has('status')) {
+            $product->status = $request->status;
+            
+            if ($product->isAvailable() && $product->categories()->count() == 0) {
+                return $this->errorResponse('An active product must have at least one category', 409);
+            }
         }
+
+        if ($product->isClean()) {
+            return $this->errorResponse('You need to specify a different value to update', 422);
+        }
+
+        $product->save();
 
         return $product;
     }
@@ -103,4 +128,17 @@ class ProductEloquentRepository implements ProductRepository
 
 		return $product;
 	}
+
+    /**
+     * Checks agent if its correct
+     * @param  [type] $request [description]
+     * @param  [type] $id      [description]
+     * @return [type]          [description]
+     */
+    protected function checkAgent($agent_id, $product)
+    {   
+        if ($agent_id != $product->agent_id) {
+            throw new HttpException(422, 'The specified agent is not the actual seller of this product');
+        }
+    }
 }

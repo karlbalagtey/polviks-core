@@ -159,6 +159,6 @@ class CategoryEloquentRepository implements CategoryRepository
         $category = $this->show($id);
         $category->delete();
 
-		return $this->showOne($category);
+		return $category;
 	}
 }

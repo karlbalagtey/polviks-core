@@ -33,6 +33,81 @@ class AgentEloquentRepository implements AgentRepository
     }
 
     /**
+     * Returns user's products
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getProducts($id)
+    {
+        $agent =  $this->show($id);
+
+        return $agent->products;
+    }
+
+    /**
+     * Return agent's services
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getServices($id)
+    {
+        $agent =  $this->show($id);
+
+        return $agent->services;
+    }
+
+    /**
+     * Returns all users transactions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getTransactions($id, $type)
+    {
+        $agent = $this->show($id);
+
+        return $agent->$type()
+            ->whereHas('transactions')
+            ->with('transactions')
+            ->get()
+            ->pluck('transactions')
+            ->collapse();
+    }
+
+    /**
+     * Returns all agents customers
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getCustomers($id, $type)
+    {
+        $agent = $this->show($id);
+
+        return $agent->$type()
+            ->whereHas('transactions')
+            ->with('transactions.customer')
+            ->get()
+            ->pluck('transactions')
+            ->collapse()
+            ->pluck('customer')
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Returns all users transactions
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getCategories($id, $type)
+    {
+        $agent = $this->show($id);
+
+        return $agent->$type()
+            ->whereHas('categories')
+            ->with('categories')
+            ->get()
+            ->pluck('categories')
+            ->collapse()
+            ->unique('id')
+            ->values();
+    }    
+
+    /**
      * Returns all users with products
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
@@ -57,7 +132,7 @@ class AgentEloquentRepository implements AgentRepository
      */
     public function show($id)
     {
-        return $this->user->has('products')->findOrfail($id);
+        return $this->user->findOrfail($id);
     }
 
     /**

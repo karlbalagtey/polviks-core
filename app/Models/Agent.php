@@ -46,12 +46,12 @@ class Agent extends Authenticatable
         'verification_token',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::addGlobalScope(new AgentScope);
-    }
+    //     static::addGlobalScope(new AgentScope);
+    // }
 
     public function isVerified()
     {

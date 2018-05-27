@@ -6,6 +6,16 @@ interface AgentRepository
 {
 	public function getAll();
 
+	public function getProducts($id);
+
+	public function getServices($id);
+
+	public function getTransactions($id, $type);
+
+	public function getCategories($id, $type);
+
+	public function getCustomers($id, $type);
+
 	public function hasProducts();
 
 	public function hasServices();
