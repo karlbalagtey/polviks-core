@@ -8,6 +8,16 @@ interface ProductRepository
 
 	public function getAgentProduct($agent_id, $product_id);
 
+	public function getTransactions($product_id);
+
+	public function getCustomers($product_id);
+
+	public function getCategories($product_id);
+
+	public function addCategory($product_id, $category_id);
+
+	public function removeCategory($product_id, $category_id);
+
 	public function show($id);
 
 	public function showBySlug($slug);

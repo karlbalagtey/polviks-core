@@ -57,10 +57,15 @@ Route::get('categories/{id}/{type}/transactions', 'Category\CategoryTransactionC
  * Products
  */
 Route::resource('products', 'Product\ProductController', ['except' => ['create', 'edit']]);
+Route::resource('products.transactions', 'Product\ProductTransactionController', ['only' => ['index']]);
+Route::resource('products.customers', 'Product\ProductCustomerController', ['only' => ['index']]);
+Route::resource('products.categories', 'Product\ProductCategoryController', ['only' => ['index', 'update', 'destroy']]);
 
 /**
  * Service
  */
 Route::resource('services', 'Service\ServiceController', ['only' => ['index', 'show']]);
+Route::resource('services.transactions', 'Service\ServiceTransactionController', ['only' => ['index']]);
+Route::resource('services.categories', 'Service\ServiceCategoryController', ['only' => ['index', 'update', 'destroy']]);
 Route::resource('services-transactions.categories', 'Service\ServiceTransactionCategoryController', ['only' => ['index']]);
 Route::resource('services-transactions.agents', 'Service\ServiceTransactionAgentController', ['only' => ['index']]);

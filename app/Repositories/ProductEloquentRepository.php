@@ -24,7 +24,7 @@ class ProductEloquentRepository implements ProductRepository
 	}
 
     /**
-     * Returns all users
+     * Returns all products
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getAll()
@@ -33,7 +33,7 @@ class ProductEloquentRepository implements ProductRepository
 	}
 
     /**
-     * Returns one user
+     * Returns one product
      * @param $id
      * @return mixed
      */
@@ -43,7 +43,7 @@ class ProductEloquentRepository implements ProductRepository
 	}
 
     /**
-     * Returns one user
+     * Returns all products for this agent
      * @param $id
      * @return mixed
      */
@@ -57,6 +57,79 @@ class ProductEloquentRepository implements ProductRepository
     }
 
     /**
+     * Returns all transactions for this product
+     * @param $id
+     * @return mixed
+     */
+    public function getTransactions($product_id)
+    {
+        $product = $this->product->findOrfail($product_id);
+
+        return $product->transactions;
+    }
+
+    /**
+     * Returns all customers for this product
+     * @param $id
+     * @return mixed
+     */
+    public function getCustomers($product_id)
+    {
+        $product = $this->product->findOrfail($product_id);
+
+        return $product->transactions()
+            ->with('customer')
+            ->get()
+            ->pluck('customer')
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Adds category for this product
+     * @param $id
+     * @return mixed
+     */
+    public function addCategory($product_id, $category_id)
+    {
+        $product = $this->product->findOrfail($product_id);
+
+        $product->categories()->syncWithoutDetaching([$category_id]);
+
+        return $product->categories;
+    }
+
+    /**
+     * Adds category for this product
+     * @param $id
+     * @return mixed
+     */
+    public function removeCategory($product_id, $category_id)
+    {
+        $product = $this->product->findOrfail($product_id);
+
+        if (!$product->categories()->find($category_id)) {
+            return $this->errorResponse('The specified category is not a category of this product', 404);
+        }
+
+        $product->categories()->detach($category_id);
+
+        return $product->categories;
+    }
+
+    /**
+     * Returns all categories for this product
+     * @param $id
+     * @return mixed
+     */
+    public function getCategories($product_id)
+    {
+        $product = $this->product->findOrfail($product_id);
+
+        return $product->categories;
+    }
+
+    /**
      * Return product via slug
      * @param  [type] $id [description]
      * @return [type]     [description]
@@ -67,7 +140,7 @@ class ProductEloquentRepository implements ProductRepository
     }
 
     /**
-     * Creates new user and returns $product
+     * Creates new product and returns $product
      * @param $data
      * @return mixed
      */

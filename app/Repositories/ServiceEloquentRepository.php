@@ -47,6 +47,62 @@ class ServiceEloquentRepository implements ServiceRepository
     }
 
     /**
+     * Returns all service transactions
+     * @param $id
+     * @return mixed
+     */
+    public function getTransactions($service_id)
+    {
+        $service = $this->service->findOrfail($service_id);
+
+        return $service->transactions;
+    }
+
+    /**
+     * Returns all categories for this product
+     * @param $id
+     * @return mixed
+     */
+    public function getCategories($service_id)
+    {
+        $service = $this->service->findOrfail($service_id);
+
+        return $service->categories;
+    }
+
+    /**
+     * Adds category for this service
+     * @param $id
+     * @return mixed
+     */
+    public function addCategory($service_id, $category_id)
+    {
+        $service = $this->service->findOrfail($service_id);
+
+        $service->categories()->syncWithoutDetaching([$category_id]);
+
+        return $service->categories;
+    }
+
+    /**
+     * Adds category for this service
+     * @param $id
+     * @return mixed
+     */
+    public function removeCategory($service_id, $category_id)
+    {
+        $service = $this->service->findOrfail($service_id);
+
+        if (!$service->categories()->find($category_id)) {
+            return $this->errorResponse('The specified category is not a category of this product', 404);
+        }
+
+        $service->categories()->detach($category_id);
+
+        return $service->categories;
+    }
+
+    /**
      * Returns one user
      * @param $id
      * @return mixed
