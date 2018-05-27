@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,8 +15,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\Event' => [
-            'App\Listeners\EventListener',
+        'App\Events\ProductUpdated' => [
+            'App\Listeners\UpdateProductQuantity',
+            'App\Listeners\CheckProductAvailability'
         ],
     ];
 
@@ -27,6 +30,21 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Product::updated(function($product) {
+            if ($product->quantity == 0 && $product->isAvailable()) {
+                $product->status = Product::UNAVAILABLE_PRODUCT;
+
+                $product->save();
+            }
+        });
+
+        Service::updated(function($service) {
+            if ($service->quantity == 0 && $service->isAvailable()) {
+                $service->status = Service::UNAVAILABLE_SERVICE;
+
+                $service->save();
+            }
+        });
+
     }
 }
