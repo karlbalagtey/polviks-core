@@ -33,4 +33,7 @@ interface CustomerRepository
 	public function update($request, $id);
 
 	public function destroy($id);
+
+	public function verify($token);
+
 }

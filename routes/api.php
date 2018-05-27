@@ -70,3 +70,7 @@ Route::resource('services.transactions', 'Service\ServiceTransactionController',
 Route::resource('services.categories', 'Service\ServiceCategoryController', ['only' => ['index', 'update', 'destroy']]);
 Route::resource('services-transactions.categories', 'Service\ServiceTransactionCategoryController', ['only' => ['index']]);
 Route::resource('services.customers.transactions', 'Service\ServiceCustomerTransactionController', ['only' => ['store']]);
+
+Route::name('verify-customer')->get('customers/verify/{token}', 'Customer\CustomerController@verify');
+Route::name('verify-agent')->get('agents/verify/{token}', 'Agent\AgentController@verify');
+Route::name('verify-user')->get('users/verify/{token}', 'User\UserController@verify');

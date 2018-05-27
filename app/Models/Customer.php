@@ -14,6 +14,9 @@ class Customer extends Authenticatable
     const VERIFIED_USER = '1';
     const UNVERIFIED_USER = '0';
 
+    const ADMIN_USER = 'true';
+    const REGULAR_USER = 'false';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,7 +30,6 @@ class Customer extends Authenticatable
         'password',
         'verified',
         'verification_token',
-        'admin'
     ];
 
     /**

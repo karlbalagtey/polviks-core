@@ -224,4 +224,21 @@ class AgentEloquentRepository implements AgentRepository
 
         return $user;
     }
+
+    /**
+     * Verify user token
+     * @param  [type] $token [description]
+     * @return [type]        [description]
+     */
+    public function verify($token)
+    {
+        $user = $this->user->where('verification_token', $token)->firstOrfail();
+
+        $user->verified = Agent::VERIFIED_USER;
+        $user->verification_token = null;
+
+        $user->save();
+
+        return $this->showMessage('The account has been verified successfully');
+    }
 }

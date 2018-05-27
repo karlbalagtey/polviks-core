@@ -114,4 +114,15 @@ class AgentController extends ApiController
             'data' => $user
         ], 200);
     }
+
+    /**
+     * Verify user
+     * @return [type] [description]
+     */
+    public function verify($token)
+    {
+        $user = $this->user->verify($token);
+
+        return $user;
+    }
 }

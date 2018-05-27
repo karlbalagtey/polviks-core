@@ -96,4 +96,15 @@ class UserController extends ApiController
         
         return $this->showOne($user);
     }
+
+    /**
+     * Verify user
+     * @return [type] [description]
+     */
+    public function verify($token)
+    {
+        $user = $this->user->verify($token);
+
+        return $user;
+    }
 }
