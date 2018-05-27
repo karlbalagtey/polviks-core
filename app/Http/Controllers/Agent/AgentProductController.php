@@ -91,8 +91,8 @@ class AgentProductController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($agent_id, $product_id)
     {
-        //
+        return $this->product->destroy($agent_id, $product_id);
     }
 }

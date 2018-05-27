@@ -14,7 +14,7 @@ interface ProductRepository
 
 	public function update($agent_id, $product_id, $request);
 
-	public function destroy($id);
+	public function destroy($agent_id, $product_id);
 
 	public function store($request, $id);
 }

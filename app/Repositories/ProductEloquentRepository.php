@@ -121,9 +121,10 @@ class ProductEloquentRepository implements ProductRepository
      * @param $id
      * @return int
      */
-    public function destroy($id)
+    public function destroy($agent_id, $product_id)
 	{
-        $product = $this->show($id);
+        $product = $this->getAgentProduct($agent_id, $product_id);
+
         $product->delete();
 
 		return $product;
