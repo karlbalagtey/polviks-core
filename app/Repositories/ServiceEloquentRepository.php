@@ -3,10 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Service;
+use App\Traits\ApiResponser;
 use App\Contracts\ServiceRepository;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ServiceEloquentRepository implements ServiceRepository
 {
+    use ApiResponser;
 
 	protected $service;
 
@@ -34,6 +37,20 @@ class ServiceEloquentRepository implements ServiceRepository
      * @param $id
      * @return mixed
      */
+    public function getAgentService($agent_id, $service_id)
+    {
+        $service = $this->service->findOrfail($service_id);
+
+        $this->checkAgent($agent_id, $service);
+
+        return $service;
+    }
+
+    /**
+     * Returns one user
+     * @param $id
+     * @return mixed
+     */
     public function show($id)
 	{
 		return $this->service->findOrfail($id);
@@ -54,15 +71,14 @@ class ServiceEloquentRepository implements ServiceRepository
      * @param $data
      * @return mixed
      */
-    public function store($data)
+    public function store($request, $id)
     {
-        $service = $this->service::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $data = $request->all();
 
-        // $service->curriculum()->attach($data['curriculum']);
+        $data['status'] = Service::UNAVAILABLE_SERVICE;
+        $data['agent_id'] = $id;
+
+        $service = Service::create($data);
 
         return $service;
     }
@@ -73,20 +89,29 @@ class ServiceEloquentRepository implements ServiceRepository
      * @param $id
      * @return mixed
      */
-    public function update($request, $id)
-	{
-        $service = $this->show($id);
+    public function update($agent_id, $service_id, $request)
+    {
+        $service = $this->getAgentService($agent_id, $service_id);
 
-        $service->update([
-        	'username' => $request->servicename,
-        	'name' => $request->name,
-        	'email' => $request->email
-        ]);
+        $service->fill($request->only([
+            'name',
+            'description',
+            'quantity',
+        ]));
 
-        if($request->password != ''){
-            $service->password = bcrypt($request->password);
-            $service->save();
+        if ($request->has('status')) {
+            $service->status = $request->status;
+            
+            if ($service->isAvailable() && $service->categories()->count() == 0) {
+                return $this->errorResponse('An active service must have at least one category', 409);
+            }
         }
+
+        if ($service->isClean()) {
+            return $this->errorResponse('You need to specify a different value to update', 422);
+        }
+
+        $service->save();
 
         return $service;
     }
@@ -96,12 +121,26 @@ class ServiceEloquentRepository implements ServiceRepository
      * @param $id
      * @return int
      */
-    public function destroy($id)
-	{
-        $service = $this->show($id);
+    public function destroy($agent_id, $service_id)
+    {
+        $service = $this->getAgentService($agent_id, $service_id);
+
         $service->delete();
 
-		return $service;
-	}
+        return $service;
+    }
+
+    /**
+     * Checks agent if its correct
+     * @param  [type] $request [description]
+     * @param  [type] $id      [description]
+     * @return [type]          [description]
+     */
+    protected function checkAgent($agent_id, $service)
+    {   
+        if ($agent_id != $service->agent_id) {
+            throw new HttpException(422, 'The specified agent is not the actual seller of this service');
+        }
+    }
 
 }

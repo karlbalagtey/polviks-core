@@ -6,9 +6,9 @@ interface ProductRepository
 {
 	public function getAll();
 
-	public function show($id);
-
 	public function getAgentProduct($agent_id, $product_id);
+
+	public function show($id);
 
 	public function showBySlug($slug);
 

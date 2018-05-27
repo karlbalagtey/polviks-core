@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
 {
-	const AVAILABLE_PRODUCT = 'available';
-	const UNAVAILABLE_PRODUCT = 'unavailable';
+	const AVAILABLE_SERVICE = 'available';
+	const UNAVAILABLE_SERVICE = 'unavailable';
 
     protected $fillable = [
     	'name',
@@ -28,7 +28,7 @@ class Service extends Model
 
     public function isAvailable()
     {
-    	return $this->status == Service::AVAILABLE_PRODUCT;
+    	return $this->status == Service::AVAILABLE_SERVICE;
     }
 
     public function agent()

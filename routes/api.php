@@ -42,7 +42,7 @@ Route::get('agents/{id}/{type}/transactions', 'Agent\AgentTransactionController@
 Route::get('agents/{id}/{type}/categories', 'Agent\AgentCategoryController@index');
 Route::get('agents/{id}/{type}/customers', 'Agent\AgentCustomerController@index');
 Route::resource('agents.products', 'Agent\AgentProductController', ['except' => ['create', 'edit']]);
-Route::resource('agents.services', 'Agent\AgentServiceController', ['except' => ['create', 'edit', 'show']]);
+Route::resource('agents.services', 'Agent\AgentServiceController', ['except' => ['create', 'edit']]);
 
 /**
  * Categories

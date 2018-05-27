@@ -6,7 +6,6 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
 use App\Contracts\ProductRepository;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\AgentProductRequest;
