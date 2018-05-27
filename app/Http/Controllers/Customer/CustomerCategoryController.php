@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Customer;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Contracts\CustomerRepository;
 use App\Http\Controllers\ApiController;
 
@@ -16,7 +14,7 @@ class CustomerCategoryController extends ApiController
      */
     public function service($id, CustomerRepository $customer)
     {
-        $categories = $customer->getAllServiceCategories($id);
+        $categories = $customer->getServiceCategories($id);
 
         return $this->showAll($categories);
     }
@@ -28,7 +26,7 @@ class CustomerCategoryController extends ApiController
      */
     public function product($id, CustomerRepository $customer)
     {
-        $categories = $customer->getAllProductCategories($id);
+        $categories = $customer->getProductCategories($id);
 
         return $this->showAll($categories);
     }

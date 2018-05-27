@@ -26,10 +26,9 @@ Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]
  * Customers
  */
 Route::resource('customers', 'Customer\CustomerController', ['except' => ['create', 'edit']]);
-Route::get('customers/{id}/product/transactions', 'Customer\CustomerTransactionController@product');
-Route::get('customers/{id}/service/transactions', 'Customer\CustomerTransactionController@service');
-Route::get('customers/{id}/product/agents', 'Customer\CustomerAgentController@product');
-Route::get('customers/{id}/service/agents', 'Customer\CustomerAgentController@service');
+Route::get('customers/{id}/{type}/transactions', 'Customer\CustomerTransactionController@index');
+Route::get('customers/{id}/products/agents', 'Customer\CustomerAgentController@product');
+Route::get('customers/{id}/services/agents', 'Customer\CustomerAgentController@service');
 Route::get('customers/{id}/products', 'Customer\CustomerProductController@index');
 Route::get('customers/{id}/services', 'Customer\CustomerServiceController@index');
 Route::get('customers/{id}/services/categories', 'Customer\CustomerCategoryController@service');
@@ -44,6 +43,10 @@ Route::resource('agents', 'Agent\AgentController', ['except' => ['create', 'edit
  * Categories
  */
 Route::resource('categories', 'Category\CategoryController');
+Route::get('categories/{id}/{type}', 'Category\CategoryItemController@index');
+Route::get('categories/{id}/{type}/agents', 'Category\CategoryAgentController@index');
+Route::get('categories/{id}/{type}/customers', 'Category\CategoryCustomerController@index');
+Route::get('categories/{id}/{type}/transactions', 'Category\CategoryTransactionController@index');
 
 /**
  * Products

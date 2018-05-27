@@ -16,7 +16,7 @@ class CustomerProductController extends ApiController
      */
     public function index($id, CustomerRepository $customer)
     {
-        $products = $customer->getAllProducts($id);
+        $products = $customer->getProducts($id);
 
         return $this->showAll($products);
     }

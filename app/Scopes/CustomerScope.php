@@ -10,6 +10,6 @@ class CustomerScope implements Scope
 {
 	public function apply(Builder $builder, Model $model)
 	{
-		$builder->has('serviceTransactions');
+		$builder->has('services');
 	}
 }

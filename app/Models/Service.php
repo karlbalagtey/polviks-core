@@ -22,6 +22,10 @@ class Service extends Model
     	'agent_id',
     ];
 
+    protected $hidden = [
+        'pivot'
+    ];
+
     public function isAvailable()
     {
     	return $this->status == Service::AVAILABLE_PRODUCT;

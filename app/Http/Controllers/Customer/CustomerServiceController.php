@@ -16,7 +16,7 @@ class CustomerServiceController extends ApiController
      */
     public function index($id, CustomerRepository $customer)
     {
-        $services = $customer->getAllServices($id);
+        $services = $customer->getServices($id);
 
         return $this->showAll($services);
     }

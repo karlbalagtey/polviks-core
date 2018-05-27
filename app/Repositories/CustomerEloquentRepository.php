@@ -36,11 +36,12 @@ class CustomerEloquentRepository implements CustomerRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAllProducts($id)
+    public function getProducts($id)
     {
         $user = $this->show($id);
 
-        return $user->productTransactions()->with('product')
+        return $user->products()
+            ->with('product')
             ->get()
             ->pluck('product');
     }
@@ -49,11 +50,12 @@ class CustomerEloquentRepository implements CustomerRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAllServices($id)
+    public function getServices($id)
     {   
         $user = $this->show($id);
 
-        return $user->serviceTransactions()->with('service')
+        return $user->services()
+            ->with('service')
             ->get()
             ->pluck('service');
     }
@@ -62,11 +64,12 @@ class CustomerEloquentRepository implements CustomerRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAllServiceCategories($id)
+    public function getServiceCategories($id)
     {   
         $user = $this->show($id);
 
-        return $user->serviceTransactions()->with('service.categories')
+        return $user->serviceTransactions()
+            ->with('service.categories')
             ->get()
             ->pluck('service.categories')
             ->collapse()
@@ -78,11 +81,12 @@ class CustomerEloquentRepository implements CustomerRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAllProductCategories($id)
+    public function getProductCategories($id)
     {   
         $user = $this->show($id);
 
-        return $user->productTransactions()->with('product.categories')
+        return $user->products()
+            ->with('product.categories')
             ->get()
             ->pluck('product.categories')
             ->collapse()
@@ -91,31 +95,31 @@ class CustomerEloquentRepository implements CustomerRepository
     }
 
     /**
-     * Returns all users
+     * Returns all product agents
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAllServiceAgents($id)
+    public function getProductAgents($id)
     {   
         $user = $this->show($id);
 
-        return $user->serviceTransactions()->with('service.agent')
+        return $user->products()->with('product.agent')
             ->get()
-            ->pluck('service.agent')
+            ->pluck('product.agent')
             ->unique('id')
             ->values();
     }
 
     /**
-     * Returns all users
+     * Returns all product agents
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAllProductAgents($id)
+    public function getServiceAgents($id)
     {   
         $user = $this->show($id);
 
-        return $user->productTransactions()->with('product.agent')
+        return $user->services()->with('service.agent')
             ->get()
-            ->pluck('product.agent')
+            ->pluck('service.agent')
             ->unique('id')
             ->values();
     }
@@ -124,40 +128,11 @@ class CustomerEloquentRepository implements CustomerRepository
      * Returns customer's service transactions
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getServiceTransactions($id)
+    public function getTransactions($id, $type)
     {
         $customer = $this->show($id);
 
-        return $customer->serviceTransactions;
-    }
-
-    /**
-     * Returns customer's product transactions
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function getProductTransactions($id)
-    {
-        $customer = $this->show($id);
-
-        return $customer->productTransactions;
-    }
-
-    /**
-     * Returns all users with transactions
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function hasProductTransactions()
-    {
-        return $this->user->has('productTransactions')->get();
-    }
-
-    /**
-     * Returns all users with transactions
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function hasServiceTransactions()
-    {
-        return $this->user->has('serviceTransactions')->get();
+        return $customer->$type;
     }
 
     /**
@@ -185,7 +160,7 @@ class CustomerEloquentRepository implements CustomerRepository
      * @param $id
      * @return mixed
      */
-    public function showOneWithProductTransaction($id)
+    public function getProductTransaction($id)
     {
         return $this->user->has('productTransactions')->findOrfail($id);
     }
@@ -195,7 +170,7 @@ class CustomerEloquentRepository implements CustomerRepository
      * @param $id
      * @return mixed
      */
-    public function showOneWithServiceTransaction($id)
+    public function getServiceTransaction($id)
     {
         return $this->user->has('serviceTransactions')->findOrfail($id);
     }

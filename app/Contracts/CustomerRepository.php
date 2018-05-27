@@ -6,33 +6,27 @@ interface CustomerRepository
 {
 	public function getAll();
 
-	public function getAllProducts($id);
+	public function getProducts($id);
 
-	public function getAllServices($id);
+	public function getServices($id);
 
-	public function getAllProductAgents($id);
+	public function getProductAgents($id);
 
-	public function getAllServiceAgents($id);
+	public function getServiceAgents($id);
 
-	public function getAllServiceCategories($id);
+	public function getTransactions($id, $type);
 
-	public function getAllProductCategories($id);
+	public function getServiceCategories($id);
 
-	public function getServiceTransactions($id);
+	public function getProductCategories($id);
 
-	public function getProductTransactions($id);
+	public function getProductTransaction($id);
 
-	public function hasProductTransactions();
-
-	public function hasServiceTransactions();
+	public function getServiceTransaction($id);
 
 	public function show($id);
 
 	public function showBySlug($slug);
-
-	public function showOneWithProductTransaction($id);
-
-	public function showOneWithServiceTransaction($id);
 
 	public function store($request);
 

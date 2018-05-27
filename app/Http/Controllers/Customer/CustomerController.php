@@ -41,7 +41,7 @@ class CustomerController extends ApiController
      */
     public function show($id)
     {
-        $user = $this->user->showOneWithProductTransaction($id);
+        $user = $this->user->show($id);
 
         return $this->showOne($user);
     }

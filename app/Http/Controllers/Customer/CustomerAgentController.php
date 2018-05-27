@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Customer;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Contracts\CustomerRepository;
 use App\Http\Controllers\ApiController;
 
@@ -16,7 +14,7 @@ class CustomerAgentController extends ApiController
      */
     public function service($id, CustomerRepository $customer)
     {
-        $agents = $customer->getAllServiceAgents($id);
+        $agents = $customer->getServiceAgents($id);
 
         return $this->showAll($agents);
     }
@@ -28,7 +26,7 @@ class CustomerAgentController extends ApiController
      */
     public function product($id, CustomerRepository $customer)
     {
-        $agents = $customer->getAllProductAgents($id);
+        $agents = $customer->getProductAgents($id);
 
         return $this->showAll($agents);
     }
