@@ -9,9 +9,12 @@ use App\Models\Service;
 use App\Models\Customer;
 use App\Mail\User\UserCreated;
 use App\Mail\Agent\AgentCreated;
+use App\Mail\User\UserEmailUpdated;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\Agent\AgentEmailUpdated;
 use Illuminate\Support\Facades\Event;
 use App\Mail\Customer\CustomerCreated;
+use App\Mail\Customer\CustomerEmailUpdated;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -41,12 +44,30 @@ class EventServiceProvider extends ServiceProvider
             Mail::to($customer)->send(new CustomerCreated($customer));
         });
 
+        Customer::updated(function($customer) {
+            if ($customer->isDirty('email')) {
+                Mail::to($customer)->send(new CustomerEmailUpdated($customer));                
+            }
+        });
+
         Agent::created(function($agent) {
             Mail::to($agent)->send(new AgentCreated($agent));
         });
 
+        Agent::updated(function($agent) {
+            if ($agent->isDirty('email')) {
+                Mail::to($agent)->send(new AgentEmailUpdated($agent));                
+            }
+        });
+
         User::created(function($user) {
             Mail::to($user)->send(new UserCreated($user));
+        });
+
+        User::updated(function($user) {
+            if ($user->isDirty('email')) {
+                Mail::to($user)->send(new UserEmailUpdated($user));                
+            }
         });
 
         Product::updated(function($product) {

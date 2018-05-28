@@ -235,15 +235,7 @@ class CustomerEloquentRepository implements CustomerRepository
             $user->password = bcrypt($request->password);
         }
 
-        if ($request->has('admin')) {
-            if (!$user->isVerified()) {
-                return response()->json(['error' => 'Only verified users can modify the admin field', 'code' => 409], 409);
-            }
-
-            $user->admin = $request->admin;
-        }
-
-        if (!$user->isDirty()) {
+        if ($user->isClean()) {
             return response()->json(['error' => 'You need to specify a different value to update', 'code' => 422], 422);
         }
 

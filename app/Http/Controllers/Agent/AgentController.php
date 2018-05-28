@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Validator;
 
 class AgentController extends ApiController
 {
@@ -82,20 +83,13 @@ class AgentController extends ApiController
      */
     public function update(Request $request, $id)
     {
-
-        $user = $this->user->show($id);
-
         Validator::make($request->all(), [
-            'email' => 'email|unique:users,email,' . $user->id,
+            'email' => 'email|unique:users,email,' . $id,
             'password' => 'min:6|confirmed',
             'admin' => 'in:' . Agent::ADMIN_USER . ',' . Agent::REGULAR_USER,
         ])->validate();
 
         $user = $this->user->update($request, $id);
-
-        if ( ! is_array(json_decode($user, true))) {
-            return $user;
-        }
 
         return $this->showOne($user, 201);
     }

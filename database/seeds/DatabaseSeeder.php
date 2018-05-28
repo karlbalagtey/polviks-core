@@ -1,5 +1,15 @@
 <?php
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Agent;
+use App\Models\Image;
+use App\Models\Product;
+use App\Models\Profile;
+use App\Models\Service;
+use App\Models\Category;
+use App\Models\Customer;
+use App\Models\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +41,20 @@ class DatabaseSeeder extends Seeder
         foreach ($this->toTruncate as $table) {
             DB::table($table)->truncate();
         }
+
+        /**
+         * Disables mailable sent when running factory seeder
+         */
+        User::flushEventListeners();
+        Agent::flushEventListeners();
+        Customer::flushEventListeners();
+        Product::flushEventListeners();
+        Category::flushEventListeners();
+        Service::flushEventListeners();
+        Role::flushEventListeners();
+        Image::flushEventListeners();
+        Profile::flushEventListeners();
+        Permission::flushEventListeners();
 
         DB::table('category_product')->truncate();
 

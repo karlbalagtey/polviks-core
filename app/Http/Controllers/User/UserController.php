@@ -70,11 +70,8 @@ class UserController extends ApiController
      */
     public function update(Request $request, $id)
     {
-
-        $user = $this->user->show($id);
-
         Validator::make($request->all(), [
-            'email' => 'email|unique:users,email,' . $user->id,
+            'email' => 'email|unique:users,email,' . $id,
             'password' => 'min:6|confirmed',
             'admin' => 'in:' . User::ADMIN_USER . ',' . User::REGULAR_USER,
         ])->validate();
