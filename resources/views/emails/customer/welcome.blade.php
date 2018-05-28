@@ -1,11 +1,17 @@
-Hello {{ $customer->username }}
+@component('mail::message')
+Hello {{ $customer->username }},
 
-Welcome to Polviks! 
+# Welcome to Polviks! 
 
 Thank you for creating an account with us. To continue with your account registration, please verify your email using the link below:
-{{ route('verify-customer', $customer->verification_token) }}
 
-We look forward to welcoming you!
+@component('mail::button', ['url' => route('verify-customer', $customer->verification_token)])
+Verify account
+@endcomponent
 
-Kind regards,
-Polviks team =)
+We look forward having you
+
+Kind regards,<br>
+Polviks team =) <br>
+{{ config('app.name') }}
+@endcomponent

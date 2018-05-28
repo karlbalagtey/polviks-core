@@ -31,6 +31,6 @@ class AgentCreated extends Mailable
      */
     public function build()
     {
-        return $this->text('emails.agent.welcome');
+        return $this->markdown('emails.agent.welcome')->subject('Please confirm your account');
     }
 }

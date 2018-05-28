@@ -31,6 +31,6 @@ class AgentEmailUpdated extends Mailable
      */
     public function build()
     {
-        return $this->text('emails.agent.confirm')->subject('Please confirm your new email');
+        return $this->markdown('emails.agent.confirm')->subject('Please confirm your new email');
     }
 }

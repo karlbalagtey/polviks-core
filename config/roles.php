@@ -39,8 +39,8 @@ return [
     */
 
     'models' => [
-        'role'       => App\Role::class,
-        'permission' => App\Permission::class,
+        'role'       => App\Models\Role::class,
+        'permission' => App\Models\Permission::class,
     ],
 
     /*

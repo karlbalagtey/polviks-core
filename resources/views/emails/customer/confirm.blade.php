@@ -1,12 +1,20 @@
+@component('mail::message')
 Hello {{ $customer->username }},
 
-Changes to your Polviks account 
+# Changes to your Polviks account 
 
 To confirm the changes to your account, please verify your email using the link below:
-{{ route('verify-customer', $customer->verification_token) }}
 
+@component('mail::button', ['url' => route('verify-customer', $customer->verification_token)])
+Verify account
+@endcomponent
+
+@component('mail::panel')
 If you believe you did not request for any changes to your account,
 please forward this email to care@polviks.com
+@endcomponent
 
-Kind regards,
-Polviks team =)
+Kind regards,<br>
+Polviks team =)<br>
+{{ config('app.name') }}
+@endcomponent

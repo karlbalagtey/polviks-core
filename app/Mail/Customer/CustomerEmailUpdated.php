@@ -31,6 +31,6 @@ class CustomerEmailUpdated extends Mailable
      */
     public function build()
     {
-        return $this->text('emails.customer.confirm')->subject('Please confirm your new email');
+        return $this->markdown('emails.customer.confirm')->subject('Please confirm your new email');
     }
 }
