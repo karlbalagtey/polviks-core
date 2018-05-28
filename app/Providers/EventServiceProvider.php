@@ -41,32 +41,44 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         Customer::created(function($customer) {
-            Mail::to($customer)->send(new CustomerCreated($customer));
+            retry(5, function() use ($customer) {
+                Mail::to($customer)->send(new CustomerCreated($customer));
+            }, 100);
         });
 
         Customer::updated(function($customer) {
             if ($customer->isDirty('email')) {
-                Mail::to($customer)->send(new CustomerEmailUpdated($customer));                
+                retry(5, function() use ($customer) {
+                    Mail::to($customer)->send(new CustomerEmailUpdated($customer));
+                }, 100);
             }
         });
 
         Agent::created(function($agent) {
-            Mail::to($agent)->send(new AgentCreated($agent));
+            retry(5, function() use ($agent) {
+                Mail::to($agent)->send(new AgentCreated($agent));
+            }, 100);
         });
 
         Agent::updated(function($agent) {
             if ($agent->isDirty('email')) {
-                Mail::to($agent)->send(new AgentEmailUpdated($agent));                
+                retry(5, function() use ($agent) {
+                    Mail::to($agent)->send(new AgentEmailUpdated($agent));                
+                }, 100);
             }
         });
 
         User::created(function($user) {
-            Mail::to($user)->send(new UserCreated($user));
+            retry(5, function() use ($user) {
+                Mail::to($user)->send(new UserCreated($user));
+            }, 100);
         });
 
         User::updated(function($user) {
             if ($user->isDirty('email')) {
-                Mail::to($user)->send(new UserEmailUpdated($user));                
+                retry(5, function() use ($user) {
+                    Mail::to($user)->send(new UserEmailUpdated($user));                
+                }, 100);
             }
         });
 

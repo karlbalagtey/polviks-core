@@ -131,8 +131,9 @@ class AgentController extends ApiController
         if ($user->isVerified()) {
             return $this->errorResponse('This user has already been verified', 409);
         }
-
-        Mail::to($user)->send(new AgentCreated($user));
+        retry(5, function() use ($user) {
+            Mail::to($user)->send(new AgentCreated($user));
+        }, 100);
 
         return $this->showMessage('The verification email has been re-sent');
     }
