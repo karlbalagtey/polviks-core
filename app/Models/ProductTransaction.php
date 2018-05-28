@@ -14,6 +14,7 @@ class ProductTransaction extends Model
     use SoftDeletes;
 
     public $transformer = ProductTransactionTransformer::class;
+
     protected $dates = ['deleted_at'];
 	protected $table = 'product_transactions';
 

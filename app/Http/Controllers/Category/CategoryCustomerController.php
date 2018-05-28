@@ -12,9 +12,21 @@ class CategoryCustomerController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id, $type, CategoryRepository $category)
+    public function index($category_id, CategoryRepository $category)
     {
-        $customers = $category->getCustomers($id, $type);
+        $customers = $category->getCustomers($category_id);
+
+        return $this->showAll($customers);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id, $type, CategoryRepository $category)
+    {
+        $customers = $category->getCustomersByType($id, $type);
 
         return $this->showAll($customers);
     }

@@ -25,6 +25,13 @@ class AgentTransformer extends TransformerAbstract
             'createdDate' => (string)$agent->created_at,
             'updatedDate' => (string)$agent->updated_at,
             'deletedDate' => isset($agent->deleted_at) ? (string) $agent->deleted_at : null,
+            
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('agents.show', $agent->id),
+                ],
+            ] 
         ];
     }
 

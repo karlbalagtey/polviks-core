@@ -6,6 +6,8 @@ interface ServiceRepository
 {
 	public function getAll();
 
+	public function getCustomers($service_id);
+
 	public function getAgentService($agent_id, $service_id);
 
 	public function getTransactions($service_id);

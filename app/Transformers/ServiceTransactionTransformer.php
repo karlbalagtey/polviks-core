@@ -22,6 +22,29 @@ class ServiceTransactionTransformer extends TransformerAbstract
             'createdDate' => (string)$transaction->created_at,
             'updatedDate' => (string)$transaction->updated_at,
             'deletedDate' => isset($transaction->deleted_at) ? (string) $transaction->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('services-transactions.show', $transaction->id),
+                ],
+                [
+                    'rel' => 'transaction.categories',
+                    'href' => route('services-transactions.categories.index', $transaction->id),
+                ],
+                [
+                    'rel' => 'transaction.agents',
+                    'href' => route('services-transactions.agents.index', $transaction->id),
+                ],
+                [
+                    'rel' => 'customer',
+                    'href' => route('customers.show', $transaction->customer_id),
+                ],
+                [
+                    'rel' => 'product',
+                    'href' => route('products.show', $transaction->service_id),
+                ]
+            ]
         ];
     }
 

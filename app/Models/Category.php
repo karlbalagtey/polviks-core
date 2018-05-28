@@ -13,6 +13,7 @@ class Category extends Model
 	use SoftDeletes;
 
     public $transformer = CategoryTransformer::class;
+
 	protected $dates = ['deleted_at'];
 
     protected $fillable = [
@@ -30,5 +31,13 @@ class Category extends Model
     public function services()
     {
     	return $this->belongsToMany(Service::class);
+    }
+
+    public function productsAndServices()
+    {
+    	$products = $this->products();
+    	$services = $this->services();
+
+        return $products->union($services->toBase());
     }
 }

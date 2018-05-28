@@ -24,6 +24,45 @@ class CustomerTransformer extends TransformerAbstract
             'createdDate' => (string)$customer->created_at,
             'updatedDate' => (string)$customer->updated_at,
             'deletedDate' => isset($customer->deleted_at) ? (string) $customer->deleted_at : null,
+
+            'links' => [
+                [
+                    'rel' => 'self',
+                    'href' => route('customers.show', $customer->id),
+                ],
+                [
+                    'rel' => 'customer.categories',
+                    'href' => route('customers.services.categories', $customer->id),
+                ],
+                [
+                    'rel' => 'customer.products',
+                    'href' => route('customers.products.index', $customer->id),
+                ],
+                [
+                    'rel' => 'customer.services',
+                    'href' => route('customers.services.index', $customer->id),
+                ],
+                [
+                    'rel' => 'customer.agents',
+                    'href' => route('customers.products.agents.index', $customer->id),
+                ],
+                [
+                    'rel' => 'customer.agents',
+                    'href' => route('customers.services.agents.index', $customer->id),
+                ],
+                [
+                    'rel' => 'customer.transactions',
+                    'href' => route('customers.type.transactions.index', [$customer->id, 'services']),
+                ],
+                [
+                    'rel' => 'customer.transactions',
+                    'href' => route('customers.type.transactions.index', [$customer->id, 'products']),
+                ],
+                [
+                    'rel' => 'user',
+                    'href' => route('users.show', $customer->id),
+                ],
+            ]
         ];
     }
 

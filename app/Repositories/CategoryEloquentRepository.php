@@ -35,7 +35,18 @@ class CategoryEloquentRepository implements CategoryRepository
      * Returns all items by type
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getItems($id, $type)
+    public function getItems($id)
+    {
+        $category = $this->show($id);
+
+        return $category->productsAndServices;
+    }
+
+    /**
+     * Returns all items by type
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getItemsByType($id, $type)
     {
         $category = $this->show($id);
 
@@ -43,10 +54,48 @@ class CategoryEloquentRepository implements CategoryRepository
     }
 
     /**
+     * Returns all items by type
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getProducts($category_id)
+    {
+        $category = $this->show($category_id);
+
+        return $category->products;
+    }
+
+    /**
+     * Returns all items by type
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getServices($category_id)
+    {
+        $category = $this->show($category_id);
+
+        return $category->services;
+    }
+
+    /**
      * Returns all agents by type
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAgents($id, $type)
+    public function getAgents($id)
+    {
+        $category = $this->show($id);
+
+        return $category->productsAndServices()
+            ->with('agent')
+            ->get()
+            ->pluck('agent')
+            ->unique()
+            ->values();
+    }
+
+    /**
+     * Returns all agents by type
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAgentsByType($id, $type)
     {
         $category = $this->show($id);
 
@@ -59,12 +108,32 @@ class CategoryEloquentRepository implements CategoryRepository
     }
 
     /**
-     * Returns all agents by type
+     * Returns all customers
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getCustomers($id, $type)
+    public function getCustomers($category_id)
     {
-        $category = $this->show($id);
+
+        $category = $this->show($category_id);
+
+        return $category->productsAndServices()
+            ->whereHas('transactions')
+            ->with('transactions.customer')
+            ->get()
+            ->pluck('transactions')
+            ->collapse()
+            ->pluck('customer')
+            ->unique('id')
+            ->values();
+    }
+
+    /**
+     * Returns all customers by type
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getCustomersByType($category_id, $type)
+    {
+        $category = $this->show($category_id);
 
         return $category->$type()
             ->whereHas('transactions')
@@ -81,7 +150,23 @@ class CategoryEloquentRepository implements CategoryRepository
      * Returns all transactions by type
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getTransactions($id, $type)
+    public function getTransactions($id)
+    {
+        $category = $this->show($id);
+
+        return $category->productsAndServices()
+            ->whereHas('transactions')
+            ->with('transactions')
+            ->get()
+            ->pluck('transactions')
+            ->collapse();
+    }
+
+    /**
+     * Returns all transactions by type
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getTransactionsByType($id, $type)
     {
         $category = $this->show($id);
 

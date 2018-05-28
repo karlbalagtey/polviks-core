@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Customer;
 use App\Models\Transaction;
 use App\Scopes\CustomerScope;
 use Laravel\Passport\HasApiTokens;
@@ -55,7 +56,7 @@ class Customer extends Authenticatable
 
     public function isVerified()
     {
-        return $this->verified == Agent::VERIFIED_USER;
+        return $this->verified == Customer::VERIFIED_USER;
     }
 
     public function products()
@@ -66,6 +67,11 @@ class Customer extends Authenticatable
     public function services()
     {
         return $this->hasMany(ServiceTransaction::class);
+    }
+
+    public function productsAndServices()
+    {
+        return $this->products()->union($this->services()->toBase());
     }
 
     public static function generateVerificationCode()

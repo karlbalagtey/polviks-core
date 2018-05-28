@@ -33,6 +33,23 @@ class ServiceEloquentRepository implements ServiceRepository
 	}
 
     /**
+     * Returns all customers of this service
+     * @param $id
+     * @return mixed
+     */
+    public function getCustomers($service_id)
+    {
+        $service = $this->service->findOrfail($service_id);
+
+        return $service->transactions()
+            ->with('customer')
+            ->get()
+            ->pluck('customer')
+            ->unique('id')
+            ->values();
+    }
+
+    /**
      * Returns one user
      * @param $id
      * @return mixed

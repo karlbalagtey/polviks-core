@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
-use Illuminate\Http\Request;
 use App\Contracts\ProductRepository;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ApiController;
 
 class ProductTransactionController extends ApiController

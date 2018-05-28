@@ -64,6 +64,20 @@ class CustomerEloquentRepository implements CustomerRepository
      * Returns all users
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
+    public function getProductsAndServices($id)
+    {   
+        $user = $this->show($id);
+
+        return $user->productsAndServices()
+            ->with('service')
+            ->get()
+            ->pluck('service');
+    }
+
+    /**
+     * Returns all users
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getServiceCategories($id)
     {   
         $user = $this->show($id);

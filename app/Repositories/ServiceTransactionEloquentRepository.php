@@ -29,6 +29,36 @@ class ServiceTransactionEloquentRepository implements ServiceTransactionReposito
 	}
 
     /**
+     * Returns all service transactions
+     * @return [type] [description]
+     */
+    public function getAll()
+    {
+        return $this->transaction->all();
+    }
+
+    /**
+     * Returns one transaction
+     * @param $id
+     * @return mixed
+     */
+    public function getOne($service_id)
+    {
+        return $this->transaction->findOrfail($service_id);
+    }
+
+    /**
+     * Returns all categories
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getCategories($id)
+    {
+        $transaction = $this->getOne($id);
+        
+        return $transaction->service->categories;
+    }
+
+    /**
      * Creates new user and returns $transaction
      * @param $data
      * @return mixed
@@ -73,45 +103,14 @@ class ServiceTransactionEloquentRepository implements ServiceTransactionReposito
     }
 
     /**
-     * Returns all transactions
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function getCategories($id)
-	{
-        $transaction = $this->show($id);
-		
-        return $transaction->service->categories;
-	}
-
-    /**
      * Returns customer
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getAgent($id)
     {
-        $transaction = $this->show($id);
+        $transaction = $this->transaction->findOrfail($id);
         
         return $transaction->service->agent;
-    }
-
-    /**
-     * Returns one user
-     * @param $id
-     * @return mixed
-     */
-    public function show($id)
-	{
-		return $this->transaction->findOrfail($id);
-	}
-
-    /**
-     * Return transaction via slug
-     * @param  [type] $id [description]
-     * @return [type]     [description]
-     */
-    public function showBySlug($slug)
-    {
-        return $this->transaction->where('slug', $slug)->first();
     }
 
     /**

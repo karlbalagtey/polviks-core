@@ -29,6 +29,37 @@ class ProductTransactionEloquentRepository implements ProductTransactionReposito
         $this->customer = $customer;
 	}
 
+
+    /**
+     * Returns all product transactions
+     * @return [type] [description]
+     */
+    public function getAll()
+    {
+        return $this->transaction->all();
+    }
+
+    /**
+     * Returns one transaction
+     * @param $id
+     * @return mixed
+     */
+    public function getOne($id)
+    {
+        return $this->transaction->findOrfail($id);
+    }
+
+    /**
+     * Returns all categories
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getCategories($id)
+    {
+        $transaction = $this->transaction->findOrfail($id);
+        
+        return $transaction->product->categories;
+    }
+
     /**
      * Creates new user and returns $transaction
      * @param $data
@@ -71,5 +102,16 @@ class ProductTransactionEloquentRepository implements ProductTransactionReposito
 
             return $transaction;
         });
+    }
+
+    /**
+     * Returns customer
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function getAgent($id)
+    {
+        $transaction = $this->transaction->findOrfail($id);
+        
+        return $transaction->service->agent;
     }
 }

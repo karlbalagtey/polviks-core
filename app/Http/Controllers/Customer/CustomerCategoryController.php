@@ -7,14 +7,16 @@ use App\Http\Controllers\ApiController;
 
 class CustomerCategoryController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function service($id, CustomerRepository $customer)
+    protected $customer;
+
+    public function __construct(CustomerRepository $customer)
     {
-        $categories = $customer->getServiceCategories($id);
+        $this->customer = $customer;
+    }
+
+    public function index($customer_id)
+    {
+        $categories = $this->customer->getCategories($customer_id);
 
         return $this->showAll($categories);
     }
@@ -24,9 +26,21 @@ class CustomerCategoryController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function product($id, CustomerRepository $customer)
+    public function service($customer_id)
     {
-        $categories = $customer->getProductCategories($id);
+        $categories = $this->customer->getServiceCategories($customer_id);
+
+        return $this->showAll($categories);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function product($customer_id)
+    {
+        $categories = $this->customer->getProductCategories($customer_id);
 
         return $this->showAll($categories);
     }
