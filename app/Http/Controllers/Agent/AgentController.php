@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Agent;
 
 use App\Models\Agent;
 use Illuminate\Http\Request;
+use App\Mail\Agent\AgentCreated;
 use App\Contracts\AgentRepository;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
@@ -104,9 +106,7 @@ class AgentController extends ApiController
     {   
         $user = $this->user->destroy($id);
         
-        return response()->json([
-            'data' => $user
-        ], 200);
+        return $this->showOne($user);
     }
 
     /**
@@ -118,5 +118,22 @@ class AgentController extends ApiController
         $user = $this->user->verify($token);
 
         return $user;
+    }
+
+    /**
+     * Verify user
+     * @return [type] [description]
+     */
+    public function resend($id)
+    {
+        $user = $this->user->show($id);
+
+        if ($user->isVerified()) {
+            return $this->errorResponse('This user has already been verified', 409);
+        }
+
+        Mail::to($user)->send(new AgentCreated($user));
+
+        return $this->showMessage('The verification email has been re-sent');
     }
 }

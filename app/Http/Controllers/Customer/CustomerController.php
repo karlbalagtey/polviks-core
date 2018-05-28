@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Customer;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Mail;
 use App\Contracts\CustomerRepository;
+use App\Mail\Customer\CustomerCreated;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
@@ -101,5 +103,22 @@ class CustomerController extends ApiController
         $user = $this->user->verify($token);
 
         return $user;
+    }
+
+    /**
+     * Verify user
+     * @return [type] [description]
+     */
+    public function resend($id)
+    {
+        $user = $this->user->show($id);
+
+        if ($user->isVerified()) {
+            return $this->errorResponse('This user has already been verified', 409);
+        }
+
+        Mail::to($user)->send(new CustomerCreated($user));
+
+        return $this->showMessage('The verification email has been re-sent');
     }
 }

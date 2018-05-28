@@ -4,8 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\User\UserCreated;
 use App\Contracts\UserRepository;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
@@ -103,5 +105,22 @@ class UserController extends ApiController
         $user = $this->user->verify($token);
 
         return $user;
+    }
+
+    /**
+     * Re-send verification
+     * @return [type] [description]
+     */
+    public function resend($id)
+    {
+        $user = $this->user->show($id);
+
+        if ($user->isVerified()) {
+            return $this->errorResponse('This user has already been verified', 409);
+        }
+
+        Mail::to($user)->send(new UserCreated($user));
+
+        return $this->showMessage('The verification email has been re-sent');
     }
 }

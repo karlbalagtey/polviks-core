@@ -74,3 +74,7 @@ Route::resource('services.customers.transactions', 'Service\ServiceCustomerTrans
 Route::name('verify-customer')->get('customers/verify/{token}', 'Customer\CustomerController@verify');
 Route::name('verify-agent')->get('agents/verify/{token}', 'Agent\AgentController@verify');
 Route::name('verify-user')->get('users/verify/{token}', 'User\UserController@verify');
+
+Route::name('resend-customer')->get('customers/{customer}/resend', 'Customer\CustomerController@resend');
+Route::name('resend-agent')->get('agents/{agent}/resend', 'Agent\AgentController@resend');
+Route::name('resend-user')->get('users/{user}/resend', 'User\UserController@resend');
