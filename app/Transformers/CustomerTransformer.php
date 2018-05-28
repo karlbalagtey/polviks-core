@@ -58,10 +58,6 @@ class CustomerTransformer extends TransformerAbstract
                     'rel' => 'customer.transactions',
                     'href' => route('customers.type.transactions.index', [$customer->id, 'products']),
                 ],
-                [
-                    'rel' => 'user',
-                    'href' => route('users.show', $customer->id),
-                ],
             ]
         ];
     }

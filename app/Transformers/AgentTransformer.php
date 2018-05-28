@@ -31,7 +31,39 @@ class AgentTransformer extends TransformerAbstract
                     'rel' => 'self',
                     'href' => route('agents.show', $agent->id),
                 ],
-            ] 
+                [
+                    'rel' => 'agent.customers',
+                    'href' => route('agents.customers.index', [$agent->id, 'services']),
+                ],
+                [
+                    'rel' => 'agent.customers',
+                    'href' => route('agents.customers.index', [$agent->id, 'products']),
+                ],
+                [
+                    'rel' => 'agent.categories',
+                    'href' => route('agents.categories.index', [$agent->id, 'services']),
+                ],
+                [
+                    'rel' => 'agent.categories',
+                    'href' => route('agents.categories.index', [$agent->id, 'products']),
+                ],
+                [
+                    'rel' => 'agent.products',
+                    'href' => route('agents.products.index', $agent->id),
+                ],
+                [
+                    'rel' => 'agent.services',
+                    'href' => route('agents.services.index', $agent->id),
+                ],
+                [
+                    'rel' => 'agent.transactions',
+                    'href' => route('agents.transactions.index', [$agent->id, 'services']),
+                ],
+                [
+                    'rel' => 'agent.transactions',
+                    'href' => route('agents.transactions.index', [$agent->id, 'products']),
+                ],
+            ],
         ];
     }
 

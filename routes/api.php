@@ -71,11 +71,11 @@ Route::resource('products.customers.transactions', 'Product\ProductCustomerTrans
  * Agents
  */
 Route::resource('agents', 'Agent\AgentController', ['except' => ['create', 'edit']]);
-Route::name('agents.customers')->get('agents/{id}/{type}/customers', 'Agent\AgentCustomerController@index');
+Route::name('agents.customers.index')->get('agents/{id}/{type}/customers', 'Agent\AgentCustomerController@index');
 Route::resource('agents.products', 'Agent\AgentProductController', ['except' => ['create', 'edit']]);
 Route::resource('agents.services', 'Agent\AgentServiceController', ['except' => ['create', 'edit']]);
-Route::name('agents.categories')->get('agents/{id}/{type}/categories', 'Agent\AgentCategoryController@index');
-Route::name('agents.transactions')->get('agents/{id}/{type}/transactions', 'Agent\AgentTransactionController@index');
+Route::name('agents.categories.index')->get('agents/{id}/{type}/categories', 'Agent\AgentCategoryController@index');
+Route::name('agents.transactions.index')->get('agents/{id}/{type}/transactions', 'Agent\AgentTransactionController@index');
 
 /**
  * Transactions
