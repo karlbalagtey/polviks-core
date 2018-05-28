@@ -21,10 +21,33 @@ class AgentTransformer extends TransformerAbstract
             'username' =>(string)$agent->username,
             'email' => (string)$agent->email,
             'isVerified' => (int)$agent->verified,
-            'isAdmin' => ($agent->admin === true),
+            'isAdmin' => ($agent->admin === 'true'),
             'createdDate' => (string)$agent->created_at,
             'updatedDate' => (string)$agent->updated_at,
             'deletedDate' => isset($agent->deleted_at) ? (string) $agent->deleted_at : null,
         ];
+    }
+
+    /**
+     * Original attributes.
+     *
+     * @return array
+     */
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier' => 'id',
+            'firstName' => 'first_name',
+            'lastName' => 'last_name',
+            'username' =>'username',
+            'email' => 'email',
+            'isVerified' => 'verified',
+            'isAdmin' => 'admin',
+            'createdDate' => 'created_at',
+            'updatedDate' => 'updated_at',
+            'deletedDate' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
     }
 }

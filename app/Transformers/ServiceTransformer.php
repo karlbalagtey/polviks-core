@@ -26,4 +26,26 @@ class ServiceTransformer extends TransformerAbstract
             'deletedDate' => isset($service->deleted_at) ? (string) $service->deleted_at : null,
         ];
     }
+
+    /**
+     * Original Attributes
+     *
+     * @return array
+     */
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier' => 'id',
+            'title' => 'name',
+            'details' => 'description',
+            'available' => 'quantity',
+            'status' => 'status',
+            'agent' => 'agent_id',
+            'createdDate' => 'created_at',
+            'updatedDate' => 'updated_at',
+            'deletedDate' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

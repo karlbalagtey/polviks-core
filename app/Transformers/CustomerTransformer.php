@@ -26,4 +26,26 @@ class CustomerTransformer extends TransformerAbstract
             'deletedDate' => isset($customer->deleted_at) ? (string) $customer->deleted_at : null,
         ];
     }
+
+    /**
+     * Original attributes.
+     *
+     * @return array
+     */
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier' => 'id',
+            'firstName' => 'first_name',
+            'lastName' => 'last_name',
+            'username' =>'username',
+            'email' => 'email',
+            'isVerified' => 'verified',
+            'createdDate' => 'created_at',
+            'updatedDate' => 'updated_at',
+            'deletedDate' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }
