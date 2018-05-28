@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Transformers;
+
+use App\Models\Agent;
+use League\Fractal\TransformerAbstract;
+
+class AgentTransformer extends TransformerAbstract
+{
+    /**
+     * A Fractal transformer.
+     *
+     * @return array
+     */
+    public function transform(Agent $agent)
+    {
+        return [
+            'identifier' => (int)$agent->id,
+            'firstName' => (string)$agent->first_name,
+            'lastName' => (string)$agent->last_name,
+            'username' =>(string)$agent->username,
+            'email' => (string)$agent->email,
+            'isVerified' => (int)$agent->verified,
+            'isAdmin' => ($agent->admin === true),
+            'createdDate' => (string)$agent->created_at,
+            'updatedDate' => (string)$agent->updated_at,
+            'deletedDate' => isset($agent->deleted_at) ? (string) $agent->deleted_at : null,
+        ];
+    }
+}

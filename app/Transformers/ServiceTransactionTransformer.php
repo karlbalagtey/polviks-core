@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Transformers;
+
+use App\Models\ServiceTransaction;
+use League\Fractal\TransformerAbstract;
+
+class ServiceTransactionTransformer extends TransformerAbstract
+{
+    /**
+     * A Fractal transformer.
+     *
+     * @return array
+     */
+    public function transform(ServiceTransaction $transaction)
+    {
+        return [
+            'identifier' => (int)$transaction->id,
+            'quantity' => (int)$transaction->quantity,
+            'buyer' => (int)$transaction->customer_id,
+            'service' => (int)$transaction->service_id,
+            'createdDate' => (string)$transaction->created_at,
+            'updatedDate' => (string)$transaction->updated_at,
+            'deletedDate' => isset($transaction->deleted_at) ? (string) $transaction->deleted_at : null,
+        ];
+    }
+}

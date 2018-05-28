@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Service;
 use App\Scopes\AgentScope;
 use Laravel\Passport\HasApiTokens;
+use App\Transformers\AgentTransformer;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -18,6 +19,8 @@ class Agent extends Authenticatable
 
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
+
+    public $transformer = AgentTransformer::class;
 
     /**
      * The attributes that are mass assignable.

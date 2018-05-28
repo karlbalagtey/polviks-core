@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use App\Scopes\CustomerScope;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use App\Transformers\CustomerTransformer;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customer extends Authenticatable
@@ -17,6 +18,8 @@ class Customer extends Authenticatable
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
 
+    public $transformer = CustomerTransformer::class;
+    
     /**
      * The attributes that are mass assignable.
      *

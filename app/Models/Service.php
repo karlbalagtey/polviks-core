@@ -6,11 +6,18 @@ use App\Models\Agent;
 use App\Models\Category;
 use App\Models\ServiceTransaction;
 use Illuminate\Database\Eloquent\Model;
+use App\Transformers\ServiceTransformer;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
-	const AVAILABLE_SERVICE = 'available';
+    use SoftDeletes;
+	
+    const AVAILABLE_SERVICE = 'available';
 	const UNAVAILABLE_SERVICE = 'unavailable';
+
+    public $transformer = ServiceTransformer::class;
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
     	'name',

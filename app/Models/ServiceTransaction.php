@@ -7,10 +7,13 @@ use App\Models\Service;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Transformers\ServiceTransactionTransformer;
 
 class ServiceTransaction extends Model
 {
     use SoftDeletes;
+
+    public $transformer = ServiceTransactionTransformer::class;
 
     protected $dates = ['deleted_at'];
 	protected $table = 'service_transactions';
