@@ -210,7 +210,6 @@ class CustomerEloquentRepository implements CustomerRepository
         $data['password'] = bcrypt($request->password);
         $data['verified'] = Customer::UNVERIFIED_USER;
         $data['verification_token'] = Customer::generateVerificationCode();
-        $data['admin'] = Customer::REGULAR_USER;
 
         $user = $this->user::create($data);
 

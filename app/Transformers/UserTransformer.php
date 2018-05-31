@@ -59,7 +59,7 @@ class UserTransformer extends TransformerAbstract
     }
 
     /**
-     * Original attributes.
+     * Transformed attributes.
      *
      * @return array
      */
