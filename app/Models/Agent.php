@@ -8,11 +8,12 @@ use App\Scopes\AgentScope;
 use Laravel\Passport\HasApiTokens;
 use App\Transformers\AgentTransformer;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Agent extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     const VERIFIED_USER = '1';
     const UNVERIFIED_USER = '0';

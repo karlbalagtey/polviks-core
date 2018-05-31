@@ -9,6 +9,11 @@ use App\Http\Controllers\ApiController;
 
 class CustomerServiceController extends ApiController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     /**
      * Display a listing of the resource.
      *

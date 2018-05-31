@@ -16,6 +16,8 @@ class ServiceCategoryController extends ApiController
      */
     public function __construct(ServiceRepository $service)
     {
+        $this->middleware('client.credentials')->only(['index']);
+        $this->middleware('auth:api')->except(['index']);
         $this->service = $service;
     }    
 

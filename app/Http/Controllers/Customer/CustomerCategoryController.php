@@ -13,7 +13,6 @@ class CustomerCategoryController extends ApiController
     public function __construct(CustomerRepository $customer)
     {
         parent::__construct();
-        $this->middleware('transform.input:' . CustomerTransformer::class)->only(['store', 'update']);
 
         $this->customer = $customer;
     }

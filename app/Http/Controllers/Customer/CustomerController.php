@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Contracts\CustomerRepository;
+use App\Transformers\UserTransformer;
 use App\Mail\Customer\CustomerCreated;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +22,9 @@ class CustomerController extends ApiController
      */
     public function __construct(CustomerRepository $user)
     {
+        parent::__construct();
+        $this->middleware('client.credentials')->only(['store', 'resend']);
+        $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
         $this->user = $user;
     }
 

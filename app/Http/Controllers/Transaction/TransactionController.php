@@ -16,6 +16,8 @@ class TransactionController extends ApiController
         ServiceTransactionRepository $serviceTransaction
     )
     {
+        parent::__construct();
+
         $this->productTransaction = $productTransaction;
         $this->serviceTransaction = $serviceTransaction;
     }

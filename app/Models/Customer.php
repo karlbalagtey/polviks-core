@@ -8,10 +8,12 @@ use App\Scopes\CustomerScope;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use App\Transformers\CustomerTransformer;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Customer extends Authenticatable
 {
+    use HasApiTokens, Notifiable, SoftDeletes;
 
     const VERIFIED_USER = '1';
     const UNVERIFIED_USER = '0';

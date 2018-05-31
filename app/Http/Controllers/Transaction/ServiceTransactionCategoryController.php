@@ -16,6 +16,7 @@ class ServiceTransactionCategoryController extends ApiController
      */
     public function __construct(ServiceTransactionRepository $transaction)
     {
+        $this->middleware('client.credentials')->only(['index']);
         $this->transaction = $transaction;
     }
 
