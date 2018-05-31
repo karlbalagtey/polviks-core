@@ -21,6 +21,9 @@ class AgentProductController extends ApiController
      */
     public function __construct(AgentRepository $user, ProductRepository $product)
     {
+        parent::__construct();
+        $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
+
         $this->user = $user;
         $this->product = $product;
     }

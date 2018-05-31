@@ -8,6 +8,7 @@ use App\Mail\User\UserCreated;
 use App\Contracts\UserRepository;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Mail;
+use App\Transformers\UserTransformer;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,6 +23,9 @@ class UserController extends ApiController
      */
     public function __construct(UserRepository $user)
     {
+        parent::__construct();
+        $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
+
         $this->user = $user;
     }
 

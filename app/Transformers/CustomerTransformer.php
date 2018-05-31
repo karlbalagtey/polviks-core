@@ -83,4 +83,26 @@ class CustomerTransformer extends TransformerAbstract
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
     }
+
+    /**
+     * Original attributes.
+     *
+     * @return array
+     */
+    public static function transformedAttribute($index)
+    {
+        $attributes = [
+            'id' => 'identifier',
+            'first_name' => 'firstName',
+            'last_name' => 'lastName',
+            'username' => 'username',
+            'email' => 'email',
+            'verified' => 'isVerified',
+            'created_at' => 'createdDate',
+            'updated_at' => 'updatedDate',
+            'deleted_at' => 'deletedDate',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

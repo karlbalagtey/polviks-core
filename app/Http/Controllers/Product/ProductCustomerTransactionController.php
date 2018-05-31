@@ -17,6 +17,9 @@ class ProductCustomerTransactionController extends ApiController
      */
     public function __construct(ProductTransactionRepository $transaction)
     {
+        parent::__construct();
+        $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store']);
+
         $this->transaction = $transaction;
     }
 

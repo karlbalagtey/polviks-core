@@ -67,4 +67,24 @@ class ServiceTransactionTransformer extends TransformerAbstract
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
     }
+
+    /**
+     * Original attributes.
+     *
+     * @return array
+     */
+    public static function transformedAttributes($index)
+    {
+        $attributes = [
+            'id' => 'identifier',
+            'quantity' => 'quantity',
+            'customer_id' => 'buyer',
+            'service_id' => 'service',
+            'created_at' => 'createdDate',
+            'updated_at' => 'updatedDate',
+            'deleted_at' => 'deletedDate',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

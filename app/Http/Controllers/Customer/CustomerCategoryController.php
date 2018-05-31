@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Contracts\CustomerRepository;
 use App\Http\Controllers\ApiController;
+use App\Transformers\CustomerTransformer;
 
 class CustomerCategoryController extends ApiController
 {
@@ -11,6 +12,9 @@ class CustomerCategoryController extends ApiController
 
     public function __construct(CustomerRepository $customer)
     {
+        parent::__construct();
+        $this->middleware('transform.input:' . CustomerTransformer::class)->only(['store', 'update']);
+
         $this->customer = $customer;
     }
 

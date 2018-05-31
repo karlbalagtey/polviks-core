@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Contracts\CategoryRepository;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\ApiController;
+use App\Transformers\CategoryTransformer;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends ApiController
@@ -18,6 +19,9 @@ class CategoryController extends ApiController
      */
     public function __construct(CategoryRepository $category)
     {
+        parent::__construct();
+        $this->middleware('transform.input:' . CategoryTransformer::class)->only(['store', 'update']);
+
         $this->category = $category;
     }
 

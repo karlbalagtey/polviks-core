@@ -8,6 +8,7 @@ use App\Mail\Agent\AgentCreated;
 use App\Contracts\AgentRepository;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Mail;
+use App\Transformers\AgentTransformer;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,6 +22,9 @@ class AgentController extends ApiController
      */
     public function __construct(AgentRepository $user)
     {
+        parent::__construct();
+        $this->middleware('transform.input:' . AgentTransformer::class)->only(['store', 'update']);
+
         $this->user = $user;
     }
 
