@@ -2,21 +2,13 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <passport-clients></passport-clients>
-                    <passport-authorized-clients></passport-authorized-clients>
-                    <passport-personal-access-tokens></passport-personal-access-tokens>
+                <div class="panel-body">
+                    You are logged in!
                 </div>
             </div>
         </div>

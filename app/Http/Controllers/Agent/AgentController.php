@@ -20,7 +20,7 @@ class AgentController extends ApiController
      * Constructor injected with Admin User Repository
      * @param UserRepository $user User repository with Eloquent
      */
-    public function __construct()
+    public function __construct(AgentRepository $user)
     {
         parent::__construct();
         $this->user = $user;
