@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
 use App\Contracts\ServiceRepository;
 use App\Http\Controllers\ApiController;
+use App\Transformers\ServiceTransformer;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\AgentServiceRequest;
 
@@ -22,7 +23,9 @@ class AgentServiceController extends ApiController
     public function __construct(AgentRepository $user, ServiceRepository $service)
     {
         parent::__construct();
-        $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
+        $this->middleware('transform.input:' . ServiceTransformer::class)->only(['store', 'update']);
+        $this->middleware('scope:manage-services');
+        $this->middleware('scope:read-general');
 
         $this->user = $user;
         $this->service = $service;

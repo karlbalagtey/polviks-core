@@ -23,6 +23,7 @@ class AgentController extends ApiController
     public function __construct(AgentRepository $user)
     {
         parent::__construct();
+        $this->middleware('scope:read-general')->only('show');
         $this->user = $user;
     }
 

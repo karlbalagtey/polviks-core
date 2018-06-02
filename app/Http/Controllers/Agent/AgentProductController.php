@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Contracts\AgentRepository;
 use App\Contracts\ProductRepository;
 use App\Http\Controllers\ApiController;
+use App\Transformers\ProductTransformer;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\AgentProductRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AgentProductController extends ApiController
 {
@@ -23,6 +25,7 @@ class AgentProductController extends ApiController
     {
         parent::__construct();
         $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
+        $this->middleware('scope:manage-products')->except('index');
 
         $this->user = $user;
         $this->product = $product;
@@ -35,9 +38,13 @@ class AgentProductController extends ApiController
      */
     public function index($id)
     {
-        $products = $this->user->getProducts($id);
+        if (request()->user()->tokenCan('read-general') || request()->user()->tokenCan('manage-products')) {
+            $products = $this->user->getProducts($id);
 
-        return $this->showAll($products);
+            return $this->showAll($products);        
+        }
+
+        throw new AuthorizationException('Invalid scope(s)');
     }
 
     /**

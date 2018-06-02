@@ -53,7 +53,7 @@ class ProductTransactionTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public static function originalAttributes($index)
+    public static function originalAttribute($index)
     {
         $attributes = [
             'identifier' => 'id',
@@ -73,7 +73,7 @@ class ProductTransactionTransformer extends TransformerAbstract
      *
      * @return array
      */
-    public static function transformedAttributes($index)
+    public static function transformedAttribute($index)
     {
         $attributes = [
             'id' => 'identifier',

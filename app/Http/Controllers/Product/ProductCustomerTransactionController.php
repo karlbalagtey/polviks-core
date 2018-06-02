@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
 use App\Contracts\ProductTransactionRepository;
+use App\Transformers\ProductTransactionTransformer;
 
 class ProductCustomerTransactionController extends ApiController
 {
@@ -18,7 +19,8 @@ class ProductCustomerTransactionController extends ApiController
     public function __construct(ProductTransactionRepository $transaction)
     {
         parent::__construct();
-        $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store']);
+        $this->middleware('transform.input:' . ProductTransactionTransformer::class)->only(['store']);
+        $this->middleware('scope:purchase-product')->only(['store']);
 
         $this->transaction = $transaction;
     }

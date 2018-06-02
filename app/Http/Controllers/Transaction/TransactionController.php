@@ -17,6 +17,7 @@ class TransactionController extends ApiController
     )
     {
         parent::__construct();
+        $this->middleware('scope:read-general')->only(['productTransactions', 'serviceTransactions']);
 
         $this->productTransaction = $productTransaction;
         $this->serviceTransaction = $serviceTransaction;

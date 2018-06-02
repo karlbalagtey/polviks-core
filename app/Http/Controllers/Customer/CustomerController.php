@@ -25,6 +25,7 @@ class CustomerController extends ApiController
         parent::__construct();
         $this->middleware('client.credentials')->only(['store', 'resend']);
         $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
+        $this->middleware('scope:read-general')->only('show');
         $this->user = $user;
     }
 
