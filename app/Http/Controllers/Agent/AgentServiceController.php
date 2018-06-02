@@ -10,6 +10,7 @@ use App\Http\Controllers\ApiController;
 use App\Transformers\ServiceTransformer;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\AgentServiceRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AgentServiceController extends ApiController
 {
@@ -24,8 +25,7 @@ class AgentServiceController extends ApiController
     {
         parent::__construct();
         $this->middleware('transform.input:' . ServiceTransformer::class)->only(['store', 'update']);
-        $this->middleware('scope:manage-services');
-        $this->middleware('scope:read-general');
+        $this->middleware('scope:manage-services')->except('index');
 
         $this->user = $user;
         $this->service = $service;
@@ -38,9 +38,13 @@ class AgentServiceController extends ApiController
      */
     public function index($agent_id)
     {
-        $services = $this->user->getServices($agent_id);
+        if (request()->user()->tokenCan('read-general') || request()->user()->tokenCan('manage-services')) {
+            $services = $this->user->getServices($agent_id);
 
-        return $this->showAll($services);
+            return $this->showAll($services);
+        }
+
+        throw new AuthorizationException('Invalid scope(s) provided');
     }
 
     /**

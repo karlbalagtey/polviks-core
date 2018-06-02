@@ -44,7 +44,7 @@ class AgentProductController extends ApiController
             return $this->showAll($products);        
         }
 
-        throw new AuthorizationException('Invalid scope(s)');
+        throw new AuthorizationException('Invalid scope(s) provided');
     }
 
     /**
