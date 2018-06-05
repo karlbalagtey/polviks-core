@@ -100,4 +100,4 @@ Route::name('resend-customer')->get('customers/{customer}/resend', 'Customer\Cus
 Route::name('resend-agent')->get('agents/{agent}/resend', 'Agent\AgentController@resend');
 Route::name('resend-user')->get('users/{user}/resend', 'User\UserController@resend');
 
-Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+// Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');

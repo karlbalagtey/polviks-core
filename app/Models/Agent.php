@@ -21,6 +21,7 @@ class Agent extends Authenticatable
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
 
+    // protected $guard = 'agent';
     public $transformer = AgentTransformer::class;
 
     /**

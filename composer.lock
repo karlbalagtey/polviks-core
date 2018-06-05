@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a96e7cfa07af7dc9418a13802a35c49",
+    "content-hash": "0e712ef2395f114667c22721cafb194d",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -2132,6 +2132,60 @@
                 "uuid"
             ],
             "time": "2018-01-20T00:28:24+00:00"
+        },
+        {
+            "name": "smartins/passport-multiauth",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sfelix-martins/passport-multiauth.git",
+                "reference": "551d6cb635fc2270dc91f2068da3d68cc284aaee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sfelix-martins/passport-multiauth/zipball/551d6cb635fc2270dc91f2068da3d68cc284aaee",
+                "reference": "551d6cb635fc2270dc91f2068da3d68cc284aaee",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/passport": "^2.0|^3.0|^4.0|^5.0|^6.0",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/database": "^3.5",
+                "orchestra/testbench": "~3.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SMartins\\PassportMultiauth\\Providers\\MultiauthServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SMartins\\PassportMultiauth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Samuel Martins",
+                    "email": "sfelix_martins@hotmail.com"
+                }
+            ],
+            "description": "Add support to multi-auth on Laravel Passport",
+            "keywords": [
+                "laravel",
+                "multi-auth",
+                "passport"
+            ],
+            "time": "2018-05-05T15:22:07+00:00"
         },
         {
             "name": "spatie/fractalistic",

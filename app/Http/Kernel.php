@@ -53,7 +53,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        // 'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth' => \SMartins\PassportMultiauth\Http\Middleware\MultiAuthenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
         'signature' => \App\Http\Middleware\SignatureMiddleware::class,
         'transform.input' => \App\Http\Middleware\TransformInput::class,
+        'oauth.providers' => \SMartins\PassportMultiauth\Http\Middleware\AddCustomProvider::class,
     ];
 }

@@ -21,6 +21,7 @@ class Customer extends Authenticatable
     const PREMIUM_USER = 'true';
     const REGULAR_USER = 'false';
 
+    // protected $guard = 'customer';
     public $transformer = CustomerTransformer::class;
     
     /**

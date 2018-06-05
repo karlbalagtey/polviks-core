@@ -45,6 +45,37 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'agents',
+        ],
+
+        'agent-api' => [
+            'driver' => 'passport',
+            'provider' => 'agents',
+        ],
+
+        'customer-api' => [
+            'driver' => 'passport',
+            'provider' => 'customers',
+        ],
+
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customers',
+        ],
+
+        'user-api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
+
+        'user' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
     ],
 
     /*
@@ -72,12 +103,12 @@ return [
 
         'agents' => [
             'driver' => 'eloquent',
-            'table' => App\Models\Agent::class,
+            'model' => App\Models\Agent::class,
         ],
 
         'customers' => [
             'driver' => 'eloquent',
-            'table' => App\Models\Customer::class,
+            'model' => App\Models\Customer::class,
         ],
     ],
 
