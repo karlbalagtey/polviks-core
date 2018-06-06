@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Contracts\CustomerRepository;
 use App\Transformers\UserTransformer;
@@ -23,11 +24,11 @@ class CustomerController extends ApiController
     public function __construct(CustomerRepository $user)
     {
         parent::__construct();
+        $this->middleware('auth:customer-api,admin-api')->only('show');
         $this->middleware('client.credentials')->only(['store', 'resend']);
         $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:read-general')->only('show');
-        // $this->middleware('can:view,customer')->only('show');
-        
+
         $this->user = $user;
     }
 
@@ -51,9 +52,13 @@ class CustomerController extends ApiController
      */
     public function show($id)
     {
-        $user = $this->user->show($id);
+        if (Auth::guard('customer-api')->user()->id != $id && Auth::guard('customer-api')->check()) {
+            return $this->errorResponse('This action is unauthorized', 403);
+        }
 
-        return $this->showOne($user);
+        $customer = $this->user->show($id);
+
+        return $this->showOne($customer);
     }
 
     /**

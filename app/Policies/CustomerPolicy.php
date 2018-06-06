@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CustomerPolicy
@@ -17,9 +17,9 @@ class CustomerPolicy
      * @param  \App\Customer  $customer
      * @return mixed
      */
-    public function view(User $user, Customer $customer)
+    public function view(Auth $user, Customer $customer)
     {
-        return $user->id === $customer->id;
+        return \Auth::user()->id === $customer->id;
     }
 
     /**
@@ -28,7 +28,7 @@ class CustomerPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function purchase(User $user, Customer $customer)
+    public function purchase(Auth $user, Customer $customer)
     {
         return $user->id === $customer->id;
     }

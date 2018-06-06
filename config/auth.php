@@ -46,9 +46,9 @@ return [
             'provider' => 'users',
         ],
 
-        'agent' => [
-            'driver' => 'session',
-            'provider' => 'agents',
+        'admin-api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
         ],
 
         'agent-api' => [
@@ -60,22 +60,6 @@ return [
             'driver' => 'passport',
             'provider' => 'customers',
         ],
-
-        'customer' => [
-            'driver' => 'session',
-            'provider' => 'customers',
-        ],
-
-        'user-api' => [
-            'driver' => 'passport',
-            'provider' => 'users',
-        ],
-
-        'user' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
     ],
 
     /*
