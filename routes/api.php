@@ -26,13 +26,13 @@ Route::resource('users', 'User\UserController', ['except' => ['create', 'edit']]
  * Customers
  */
 Route::resource('customers', 'Customer\CustomerController', ['except' => ['create', 'edit']]);
-Route::name('customers.type.transactions.index')->get('customers/{id}/{type}/transactions', 'Customer\CustomerTransactionController@index');
-Route::name('customers.products.agents.index')->get('customers/{id}/products/agents', 'Customer\CustomerAgentController@product');
-Route::name('customers.services.agents.index')->get('customers/{id}/services/agents', 'Customer\CustomerAgentController@service');
-Route::name('customers.products.index')->get('customers/{id}/products', 'Customer\CustomerProductController@index');
-Route::name('customers.services.index')->get('customers/{id}/services', 'Customer\CustomerServiceController@index');
-Route::name('customers.services.categories')->get('customers/{id}/services/categories', 'Customer\CustomerCategoryController@service');
-Route::name('customers.products.categories')->get('customers/{id}/products/categories', 'Customer\CustomerCategoryController@product');
+Route::name('customers.type.transactions.index')->get('customers/{customer}/{type}/transactions', 'Customer\CustomerTransactionController@index');
+Route::name('customers.products.agents.index')->get('customers/{customer}/products/agents', 'Customer\CustomerAgentController@product');
+Route::name('customers.services.agents.index')->get('customers/{customer}/services/agents', 'Customer\CustomerAgentController@service');
+Route::name('customers.products.index')->get('customers/{customer}/products', 'Customer\CustomerProductController@index');
+Route::name('customers.services.index')->get('customers/{customer}/services', 'Customer\CustomerServiceController@index');
+Route::name('customers.services.categories')->get('customers/{customer}/services/categories', 'Customer\CustomerCategoryController@service');
+Route::name('customers.products.categories')->get('customers/{customer}/products/categories', 'Customer\CustomerCategoryController@product');
 
 /**
  * Categories
@@ -71,11 +71,11 @@ Route::resource('products.customers.transactions', 'Product\ProductCustomerTrans
  * Agents
  */
 Route::resource('agents', 'Agent\AgentController', ['except' => ['create', 'edit']]);
-Route::name('agents.customers.index')->get('agents/{id}/{type}/customers', 'Agent\AgentCustomerController@index');
+Route::name('agents.customers.index')->get('agents/{agent}/{type}/customers', 'Agent\AgentCustomerController@index');
 Route::resource('agents.products', 'Agent\AgentProductController', ['except' => ['create', 'edit']]);
 Route::resource('agents.services', 'Agent\AgentServiceController', ['except' => ['create', 'edit']]);
-Route::name('agents.categories.index')->get('agents/{id}/{type}/categories', 'Agent\AgentCategoryController@index');
-Route::name('agents.transactions.index')->get('agents/{id}/{type}/transactions', 'Agent\AgentTransactionController@index');
+Route::name('agents.categories.index')->get('agents/{agent}/{type}/categories', 'Agent\AgentCategoryController@index');
+Route::name('agents.transactions.index')->get('agents/{agent}/transactions/{type}', 'Agent\AgentTransactionController@index');
 
 /**
  * Transactions
@@ -86,9 +86,9 @@ Route::resource('services-transactions.agents', 'Transaction\ServiceTransactionA
 Route::resource('products-transactions.agents', 'Transaction\ProductTransactionAgentController', ['only' => ['index']]);
 
 Route::name('services-transactions.index')->get('services-transactions', 'Transaction\TransactionController@serviceTransactions');
-Route::name('services-transactions.show')->get('services-transactions/{id}', 'Transaction\TransactionController@oneServiceTransaction');
+Route::name('services-transactions.show')->get('services-transactions/{serviceTransaction}', 'Transaction\TransactionController@showServiceTransaction');
 Route::name('products-transactions.index')->get('products-transactions', 'Transaction\TransactionController@productTransactions');
-Route::name('products-transactions.show')->get('products-transactions/{id}', 'Transaction\TransactionController@oneProductTransaction');
+Route::name('products-transactions.show')->get('products-transactions/{productTransaction}', 'Transaction\TransactionController@showProductTransaction');
 
 /**
  * Users

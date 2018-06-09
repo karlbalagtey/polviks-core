@@ -44,9 +44,9 @@ class ProductTransactionEloquentRepository implements ProductTransactionReposito
      * @param $id
      * @return mixed
      */
-    public function getOne($id)
+    public function getOne($transaction_id)
     {
-        return $this->transaction->findOrfail($id);
+        return $this->transaction->findOrfail($transaction_id);
     }
 
     /**

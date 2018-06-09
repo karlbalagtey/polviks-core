@@ -19,6 +19,9 @@ class TransactionController extends ApiController
         parent::__construct();
         $this->middleware('scope:read-general')->only(['productTransactions', 'serviceTransactions']);
 
+        $this->middleware('can:view,App\Models\ProductTransaction')->only('showProductTransaction');
+        $this->middleware('can:view,App\Models\ServiceTransaction')->only('showServiceTransaction');
+
         $this->productTransaction = $productTransaction;
         $this->serviceTransaction = $serviceTransaction;
     }
@@ -30,6 +33,8 @@ class TransactionController extends ApiController
      */
     public function productTransactions()
     {
+        // $this->forAdminOnly();
+
         $transactions = $this->productTransaction->getAll();
 
         return $this->showAll($transactions);
@@ -40,9 +45,9 @@ class TransactionController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function oneProductTransaction($product_id)
+    public function showProductTransaction($productTransaction)
     {
-        $transaction = $this->productTransaction->getOne($product_id);
+        $transaction = $this->productTransaction->getOne($productTransaction);
 
         return $this->showOne($transaction);
     }
@@ -64,9 +69,9 @@ class TransactionController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function oneServiceTransaction($service_id)
+    public function showServiceTransaction($serviceTransaction)
     {
-        $transaction = $this->serviceTransaction->getOne($service_id);
+        $transaction = $this->serviceTransaction->getOne($serviceTransaction);
 
         return $this->showOne($transaction);
     }

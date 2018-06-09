@@ -36,6 +36,8 @@ class AgentController extends ApiController
      */
     public function index()
     {
+        $this->forAdminOnly();
+
         $users = $this->user->hasProducts();
 
         return $this->showAll($users);

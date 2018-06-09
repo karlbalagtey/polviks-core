@@ -8,7 +8,7 @@ interface ProductTransactionRepository
 
 	public function getAgent($id);
 
-	public function getOne($product_id);
+	public function getOne($transaction_id);
 
 	public function getCategories($id);
 

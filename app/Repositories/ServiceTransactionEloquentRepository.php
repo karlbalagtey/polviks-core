@@ -42,9 +42,9 @@ class ServiceTransactionEloquentRepository implements ServiceTransactionReposito
      * @param $id
      * @return mixed
      */
-    public function getOne($service_id)
+    public function getOne($transaction_id)
     {
-        return $this->transaction->findOrfail($service_id);
+        return $this->transaction->findOrfail($transaction_id);
     }
 
     /**

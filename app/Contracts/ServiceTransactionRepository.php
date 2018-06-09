@@ -8,7 +8,7 @@ interface ServiceTransactionRepository
 
 	public function getAgent($id);
 
-	public function getOne($service_id);
+	public function getOne($transaction_id);
 
 	public function getCategories($id);
 

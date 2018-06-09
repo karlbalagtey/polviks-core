@@ -40,7 +40,7 @@ class CustomerController extends ApiController
      */
     public function index()
     {
-        $this->allowedAdminAction();
+        $this->forAdminOnly();
 
         $users = $this->user->getAll();
 

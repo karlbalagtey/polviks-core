@@ -18,10 +18,10 @@ class ApiController extends Controller
     	$this->middleware('auth:admin-api,customer-api,agent-api');
     }
 
-    protected function allowedAdminAction()
+    protected function forAdminOnly()
     {
     	if (Gate::denies('admin-action')) {
-    		throw new AuthorizationException("This action is unauthorized in the Gate");
+    		throw new AuthorizationException("Oops! This action is unauthorized");
     	}
     }
 }
