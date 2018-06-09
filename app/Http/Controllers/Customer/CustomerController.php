@@ -21,13 +21,14 @@ class CustomerController extends ApiController
      * Constructor injected with Admin User Repository
      * @param UserRepository $user User repository with Eloquent
      */
-    public function __construct(CustomerRepository $user)
+    public function __construct(Request $request, CustomerRepository $user)
     {
         parent::__construct();
-        $this->middleware('auth:customer-api,admin-api')->only('show');
+
         $this->middleware('client.credentials')->only(['store', 'resend']);
         $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:read-general')->only('show');
+        $this->middleware('can:view,App\Models\Customer')->only('show');
 
         $this->user = $user;
     }
@@ -39,6 +40,8 @@ class CustomerController extends ApiController
      */
     public function index()
     {
+        $this->allowedAdminAction();
+
         $users = $this->user->getAll();
 
         return $this->showAll($users);
@@ -52,13 +55,13 @@ class CustomerController extends ApiController
      */
     public function show($id)
     {
-        if (Auth::guard('customer-api')->user()->id != $id && Auth::guard('customer-api')->check()) {
-            return $this->errorResponse('This action is unauthorized', 403);
-        }
+        // if (Auth::guard('customer-api')->check() && Auth::guard('customer-api')->user()->id == $id) {
+            $customer = $this->user->show($id);
 
-        $customer = $this->user->show($id);
+            return $this->showOne($customer);
+        // }
 
-        return $this->showOne($customer);
+        // return $this->errorResponse('This is not your account', 403);
     }
 
     /**

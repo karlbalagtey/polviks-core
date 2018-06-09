@@ -19,6 +19,9 @@ class ServiceCustomerTransactionController extends ApiController
     {
         parent::__construct();
         $this->middleware('transform.input:' . TransactionTransformer::class)->only(['store']);
+        $this->middleware('scope:purchase-service')->only(['store']);
+        $this->middleware('can:purchase,App\Models\Customer')->only('store');
+
         $this->transaction = $transaction;
     }
 

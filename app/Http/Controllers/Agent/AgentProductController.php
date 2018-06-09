@@ -26,7 +26,10 @@ class AgentProductController extends ApiController
         parent::__construct();
         $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:manage-products')->except('index');
-
+        $this->middleware('can:view,App\Models\Agent')->only('index');
+        $this->middleware('can:sell,App\Models\Agent')->only('store');
+        $this->middleware('can:edit-product,App\Models\Agent')->only('update');
+        $this->middleware('can:delete-product,App\Models\Agent')->only('destroy');
         $this->user = $user;
         $this->product = $product;
     }

@@ -26,6 +26,10 @@ class AgentServiceController extends ApiController
         parent::__construct();
         $this->middleware('transform.input:' . ServiceTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:manage-services')->except('index');
+        $this->middleware('can:view,App\Models\Agent')->only('index');
+        $this->middleware('can:sell,App\Models\Agent')->only('store');
+        $this->middleware('can:edit-service,App\Models\Agent')->only('update');
+        $this->middleware('can:delete-service,App\Models\Agent')->only('destroy');
 
         $this->user = $user;
         $this->service = $service;

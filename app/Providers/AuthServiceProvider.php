@@ -4,7 +4,10 @@ namespace App\Providers;
 
 use Route;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Agent;
 use App\Models\Customer;
+use App\Policies\AgentPolicy;
 use Laravel\Passport\Passport;
 use App\Policies\CustomerPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -19,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Customer::class => CustomerPolicy::class,
+        Agent::class => AgentPolicy::class,
     ];
 
     /**
@@ -29,6 +33,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Gate::define('admin-action', function ($user) {
+            return ($user instanceOf User);
+        });
 
         Passport::routes();
         Passport::tokensExpireIn(Carbon::now()->addMinutes(30));
