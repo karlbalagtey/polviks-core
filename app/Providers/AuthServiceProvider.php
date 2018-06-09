@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Agent;
 use App\Models\Customer;
+use App\Policies\UserPolicy;
 use App\Policies\AgentPolicy;
 use Laravel\Passport\Passport;
 use App\Policies\CustomerPolicy;
@@ -23,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Customer::class => CustomerPolicy::class,
         Agent::class => AgentPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**

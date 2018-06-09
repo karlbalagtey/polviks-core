@@ -3,12 +3,20 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
 {
     use HandlesAuthorization;
+
+    public function before($user, $ability)
+    {
+        if ($user instanceOf User && $user->admin === 'true') {
+            return true;
+        }
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -17,20 +25,9 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user)
     {
-        return $user->id === $customer->id;
-    }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-        //
+        return (int)Route::current()->parameters('user')['user'] === $user->id;
     }
 
     /**
@@ -40,9 +37,9 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user)
     {
-        //
+        return (int)Route::current()->parameters('user')['user'] === $user->id;
     }
 
     /**
@@ -52,8 +49,8 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user)
     {
-        //
+        return (int)Route::current()->parameters('user')['user'] === $user->id && Auth::guard('admin-api')->user()->token()->client->personal_access_client;
     }
 }
