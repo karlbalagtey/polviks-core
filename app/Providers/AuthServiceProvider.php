@@ -30,7 +30,6 @@ class AuthServiceProvider extends ServiceProvider
         Agent::class => AgentPolicy::class,
         User::class => UserPolicy::class,
         ProductTransaction::class => ProductTransactionPolicy::class,
-        ServiceTransaction::class => ServiceTransactionPolicy::class,
     ];
 
     /**

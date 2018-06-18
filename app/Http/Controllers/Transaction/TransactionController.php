@@ -17,13 +17,14 @@ class TransactionController extends ApiController
     )
     {
         parent::__construct();
-        $this->middleware('scope:read-general')->only(['productTransactions', 'serviceTransactions']);
-
-        $this->middleware('can:view,App\Models\ProductTransaction')->only('showProductTransaction');
-        $this->middleware('can:view,App\Models\ServiceTransaction')->only('showServiceTransaction');
-
+        
         $this->productTransaction = $productTransaction;
         $this->serviceTransaction = $serviceTransaction;
+
+        $this->middleware('scope:read-general')->only(['productTransactions', 'serviceTransactions']);
+
+        $this->middleware('can:product-transaction,App\Models\ProductTransaction')->only('showProductTransaction');
+        $this->middleware('can:view,App\Models\ServiceTransaction')->only('showServiceTransaction');
     }
 
     /**

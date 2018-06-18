@@ -98,12 +98,12 @@ class UserController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {   
-        $user = $this->user->destroy($id);
+    // public function destroy($id)
+    // {   
+    //     $user = $this->user->destroy($id);
         
-        return $this->showOne($user);
-    }
+    //     return $this->showOne($user);
+    // }
 
     /**
      * Verify user
