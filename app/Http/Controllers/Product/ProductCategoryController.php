@@ -18,8 +18,10 @@ class ProductCategoryController extends ApiController
     public function __construct(ProductRepository $product)
     {
         $this->middleware('client.credentials')->only(['index']);
-        $this->middleware('auth:api')->except(['index']);
+        $this->middleware('auth:agent-api')->except(['index']);
         $this->middleware('scope:manage-products')->except(['index']);
+        $this->middleware('can:add-category,App\Models\Product')->only('update');
+        $this->middleware('can:delete-category,App\Models\Product')->only('destroy');
 
         $this->product = $product;
     }    

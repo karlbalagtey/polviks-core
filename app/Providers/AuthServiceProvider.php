@@ -6,10 +6,14 @@ use Route;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Agent;
+use App\Models\Product;
+use App\Models\Service;
 use App\Models\Customer;
 use App\Policies\UserPolicy;
 use App\Policies\AgentPolicy;
 use Laravel\Passport\Passport;
+use App\Policies\ProductPolicy;
+use App\Policies\ServicePolicy;
 use App\Policies\CustomerPolicy;
 use App\Models\ProductTransaction;
 use App\Models\ServiceTransaction;
@@ -30,6 +34,8 @@ class AuthServiceProvider extends ServiceProvider
         Agent::class => AgentPolicy::class,
         User::class => UserPolicy::class,
         ProductTransaction::class => ProductTransactionPolicy::class,
+        Product::class => ProductPolicy::class,
+        Service::class => ServicePolicy::class,
     ];
 
     /**
