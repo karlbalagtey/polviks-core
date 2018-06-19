@@ -16,7 +16,7 @@ class ServiceController extends ApiController
      */
     public function __construct(ServiceRepository $service)
     {
-        $this->middleware('client.credentials')->only(['index', 'show']);
+        // $this->middleware('client.credentials')->only(['index', 'show']);
         $this->service = $service;
     }
 
