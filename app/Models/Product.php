@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Agent;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductTransaction;
@@ -34,6 +35,8 @@ class Product extends Model
         'pivot'
     ];
 
+    public $load = ['images'];
+
     public function isAvailable()
     {
     	return $this->status == Product::AVAILABLE_PRODUCT;
@@ -52,5 +55,10 @@ class Product extends Model
     public function categories()
     {
     	return $this->belongsToMany(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }

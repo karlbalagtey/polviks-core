@@ -18,6 +18,22 @@ class CreateImagesTable extends Migration
             $table->string('path')->nullable();
             $table->string('file')->nullable();
             $table->string('type')->nullable();
+            $table->string('mobile_url')->nullable();
+            $table->string('web_url')->nullable();
+            $table->string('thumbnail_url')->nullable();
+            $table->integer('product_id')->unsigned()->nullable();
+            $table->integer('service_id')->unsigned()->nullable();
+            
+            $table->foreign('product_id')
+                  ->references('id')
+                  ->on('products')
+                  ->onDelete('cascade');
+                  
+            $table->foreign('service_id')
+                  ->references('id')
+                  ->on('services')
+                  ->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

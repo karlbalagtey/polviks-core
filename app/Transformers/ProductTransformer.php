@@ -24,7 +24,6 @@ class ProductTransformer extends TransformerAbstract
             'createdDate' => (string)$product->created_at,
             'updatedDate' => (string)$product->updated_at,
             'deletedDate' => isset($product->deleted_at) ? (string) $product->deleted_at : null,
-
             'links' => [
                 [
                     'rel' => 'self',
@@ -46,7 +45,8 @@ class ProductTransformer extends TransformerAbstract
                     'rel' => 'agent',
                     'href' => route('agents.show', $product->agent_id),
                 ]
-            ]
+            ],
+            'images' => $product->images
         ];
     }
 

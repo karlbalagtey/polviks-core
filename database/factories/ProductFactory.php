@@ -11,7 +11,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'description' => $faker->paragraph(1),
         'quantity' => $faker->numberBetween(1, 10),
         'status' => $faker->randomElement([Product::AVAILABLE_PRODUCT, Product::UNAVAILABLE_PRODUCT]),
-        'image_id' => Image::all()->random()->id,
         'agent_id' => Agent::all()->random()->id,
     ];
 });

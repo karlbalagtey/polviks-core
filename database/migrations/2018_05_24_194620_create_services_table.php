@@ -20,8 +20,6 @@ class CreateServicesTable extends Migration
             $table->string('description', 1000)->nullable();
             $table->integer('quantity')->unsigned();
             $table->string('status')->default(Service::UNAVAILABLE_SERVICE);
-            $table->integer('image_id')->unsigned();
-            $table->foreign('image_id')->references('id')->on('images');
             $table->integer('agent_id')->unsigned();
             $table->foreign('agent_id')->references('id')->on('agents');
 

@@ -11,7 +11,6 @@ $factory->define(Service::class, function (Faker $faker) {
         'description' => $faker->paragraph(1),
         'quantity' => $faker->numberBetween(1, 10),
         'status' => $faker->randomElement([Service::AVAILABLE_SERVICE, Service::UNAVAILABLE_SERVICE]),
-        'image_id' => Image::all()->random()->id,
         'agent_id' => Agent::all()->random()->id,
     ];
 });

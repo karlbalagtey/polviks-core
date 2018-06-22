@@ -65,10 +65,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CustomersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
-        $this->call(ImagesTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
         $this->call(ServicesTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
         $this->call(TransactionsTableSeeder::class);
         // $this->call(oAuthClientTestSeeder::class);
 
