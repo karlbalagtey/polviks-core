@@ -4,7 +4,9 @@ Polviks core API
 Under development
 
 ## Features
-1. Authentication with Laravel Passport (oAuth2)
+1. Authentication 
+   - Laravel Passport (oAuth2)
+   - Facebook Authentication
 2. Products CRUD
    - Categories
    - Transaction
