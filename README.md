@@ -1,5 +1,4 @@
-# polviks-core
-Polviks core API
+# Polviks Core
 A starter boilerplate for the most commonly used features in an API
 
 ## Features
@@ -45,3 +44,30 @@ A starter boilerplate for the most commonly used features in an API
    - api/services-transactions/{serviceTransaction} GET 
    - api/services-transactions/{services_transaction}/agents GET
    - api/services-transactions/{services_transaction}/categories GET
+- Customers
+   - api/customers GET | POST | PUT | PATCH | DELETE
+   - api/customers/verify/{token}
+   - api/customers/{customer} GET
+   - api/customers/{customer}/products
+   - api/customers/{customer}/products/agents
+   - api/customers/{customer}/products/categories
+   - api/customers/{customer}/resend
+   - api/customers/{customer}/services
+   - api/customers/{customer}/services/agents
+   - api/customers/{customer}/services/categories
+   - api/customers/{customer}/{type}/transactions
+- Categories
+   - api/categories
+   - api/categories/{category}
+   - api/categories/{category}/agents
+   - api/categories/{category}/agents/{agent}
+   - api/categories/{category}/customers
+   - api/categories/{category}/customers/{customer}
+   - api/categories/{category}/items
+   - api/categories/{category}/products
+   - api/categories/{category}/services
+   - api/categories/{category}/transactions
+   - api/categories/{category}/transactions/{transaction}
+   - api/categories/{id}/{type}/agents
+   - api/categories/{id}/{type}/customers
+   - api/categories/{id}/{type}/transactions
