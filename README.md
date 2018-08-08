@@ -1,7 +1,6 @@
 # polviks-core
 Polviks core API
-
-Under development
+A starter boilerplate for the most commonly used features in an API
 
 ## Features
 1. Authentication 
