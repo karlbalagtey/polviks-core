@@ -1,0 +1,11 @@
+.product {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 20px;
+	border: 1px solid $grey;
+}
+
+.product-body {
+	margin-top: auto;
+}

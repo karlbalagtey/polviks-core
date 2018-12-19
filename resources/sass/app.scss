@@ -1,0 +1,37 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Bootstrap pre requisit
+@import "~bootstrap/scss/functions";
+
+// Variables
+@import 'variables';
+
+// Bootstrap Required
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/root';
+@import '~bootstrap/scss/reboot';
+
+// Bootstrap grid
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~bootstrap/scss/mixins/grid-framework';
+@import '~bootstrap/scss/mixins/grid';
+@import '~bootstrap/scss/grid';
+
+// Bootstrap Utilities
+@import '~bootstrap/scss/utilities';
+
+// Bootstrap components
+@import '~bootstrap/scss/tables';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/carousel';
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/card';
+
+// Theme
+@import 'theme';
