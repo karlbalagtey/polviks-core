@@ -7,8 +7,13 @@ use App\Http\Controllers\ApiController;
 
 class CustomerAgentController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin-api,customer-api');
+    }
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the service agents (Seller of service) of this customer.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,7 +25,7 @@ class CustomerAgentController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the product agents (Seller of products) of this customer.
      *
      * @return \Illuminate\Http\Response
      */

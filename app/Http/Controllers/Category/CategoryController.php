@@ -14,13 +14,13 @@ class CategoryController extends ApiController
     protected $category;
 
     /**
-     * Constructor injected with Admin User Repository
-     * @param UserRepository $category User repository with Eloquent
+     * Constructor injected with Category Repository
+     * @param CategoryRepository $category Category Repository with Eloquent
      */
     public function __construct(CategoryRepository $category)
     {
-        $this->middleware('client.credentials')->only(['show']);
-        $this->middleware('auth:api')->except(['index', 'show']);
+        $this->middleware('client.credentials')->only(['index', 'show']);
+        $this->middleware('auth:admin-api')->except(['index', 'show']);
         $this->middleware('transform.input:' . CategoryTransformer::class)->only(['store', 'update']);
 
         $this->category = $category;

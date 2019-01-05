@@ -12,13 +12,19 @@ class CustomerCategoryController extends ApiController
 
     public function __construct(CustomerRepository $customer)
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api,customer-api');
         $this->middleware('scope:read-general')->only('index');
         $this->middleware('can:view,App\Models\Customer')->only('index');
 
         $this->customer = $customer;
     }
 
+    /**
+     * Display a listing of all the categories this customer 
+     * had transactions from.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index($customer_id)
     {
         $categories = $this->customer->getCategories($customer_id);
@@ -27,7 +33,8 @@ class CustomerCategoryController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the categories in the services where
+     * customer had transactions
      *
      * @return \Illuminate\Http\Response
      */
@@ -39,7 +46,8 @@ class CustomerCategoryController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the categories in the products where
+     * customer had transactions in
      *
      * @return \Illuminate\Http\Response
      */

@@ -13,8 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:customer-api')->get('/auth/customer', function (Request $request) {
+    return response()->json($request->user());
+});
+
+Route::middleware('auth:admin-api')->get('/auth/admin', function (Request $request) {
+    return response()->json($request->user());
+});
+
+Route::middleware('auth:agent-api')->get('/auth/agent', function (Request $request) {
+    return response()->json($request->user());
 });
 
 /**
@@ -47,7 +55,7 @@ Route::resource('categories.transactions', 'Category\CategoryTransactionControll
 
 Route::name('categories.transactions.show')->get('categories/{id}/{type}/transactions', 'Category\CategoryTransactionController@show');
 Route::name('categories.agents.show')->get('categories/{id}/{type}/agents', 'Category\CategoryAgentController@show');
-Route::name('categories.customers.show')->get('categories/{id}/{type}/customers', 'Category\CategoryCustomerController@show');
+Route::name('categories.customers.show.type')->get('categories/{id}/{type}/customers', 'Category\CategoryCustomerController@show');
 
 /**
  * Services (Agency)

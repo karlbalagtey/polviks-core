@@ -23,7 +23,7 @@ class AgentProductController extends ApiController
      */
     public function __construct(AgentRepository $user, ProductRepository $product)
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api,agent-api');
         $this->middleware('transform.input:' . ProductTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:manage-products')->except('index');
         $this->middleware('can:view,App\Models\Agent')->only('index');

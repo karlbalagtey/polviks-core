@@ -11,13 +11,13 @@ class CustomerServiceController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api,customer-api');
         $this->middleware('scope:read-general')->only('index');
         $this->middleware('can:view,App\Models\Customer')->only('index');
     }
     
     /**
-     * Display a listing of the resource.
+     * Display a listing of services for this customer.
      *
      * @return \Illuminate\Http\Response
      */

@@ -9,11 +9,11 @@ class CategoryCustomerController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api');
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the customers in this category.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,7 +25,7 @@ class CategoryCustomerController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the customers by type of category
      *
      * @return \Illuminate\Http\Response
      */

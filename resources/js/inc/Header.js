@@ -1,7 +1,43 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import Auth from '../components/Auth/Auth';
 
 class Header extends Component {
+	state = {
+		authUser: ''
+	};
+
+	handleLogout = () => {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+		localStorage.removeItem('expiresIn');
+		localStorage.removeItem('authUser');
+	};
+
+	renderLogin() {
+		const isLoggedIn = localStorage.getItem('accessToken');
+		const authUser = JSON.parse(localStorage.getItem('authUser'));
+
+		if (isLoggedIn && authUser) {
+			return(
+	            <li className="nav-item dropdown">
+	                <a href="#" id="navbarDropdown" className="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{authUser.first_name} {authUser.last_name}</a>
+	                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+	                	<a className="dropdown-item" href="#">Profile</a>
+	                	<div className="dropdown-divider"></div>
+	                	<a className="dropdown-item" href="#" onClick={this.handleLogout}>Logout</a>
+	                </div>
+	            </li>
+			);			
+		}
+
+		return(
+            <li className="nav-item">
+                <NavLink to="/login" className="nav-link">Login</NavLink>
+            </li>
+		);
+	}
+
 	render () {
 		const headerTitle = 'Konnektion';
 
@@ -16,10 +52,10 @@ class Header extends Component {
 			        <div className="collapse navbar-collapse" id="navbarSupportedContent">
 			            <ul className="navbar-nav mr-auto">
 			                <li className="nav-item">
-			                    <NavLink className="nav-link" to="/home">Dashboard</NavLink>
+			                    <NavLink className="nav-link" to="/dashboard">Dashboard</NavLink>
 			                </li>
 			                <li className="nav-item">
-			                    <NavLink className="nav-link" to="/admin/organisations">Organisation</NavLink>
+			                    <NavLink className="nav-link" to="/products">Products</NavLink>
 			                </li>
 			                <li className="nav-item">
 			                    <NavLink className="nav-link" to="/admin/events">Events</NavLink>
@@ -27,12 +63,7 @@ class Header extends Component {
 			            </ul>
 
 			            <ul className="navbar-nav ml-auto">
-			                <li className="nav-item">
-			                    <NavLink className="nav-link" to="/password">Password</NavLink>
-			                </li>
-			                <li className="nav-item">
-			                    <a className="nav-link">Logout</a>
-			                </li>
+			                {this.renderLogin()}
 			            </ul>
 			        </div>
 			    </div>

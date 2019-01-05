@@ -9,7 +9,7 @@ class CategoryTransactionController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api');
     }
 
     /**

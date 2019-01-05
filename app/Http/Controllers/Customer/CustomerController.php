@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Contracts\CustomerRepository;
-use App\Transformers\UserTransformer;
+use App\Transformers\CustomerTransformer;
 use App\Mail\Customer\CustomerCreated;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
@@ -23,10 +23,9 @@ class CustomerController extends ApiController
      */
     public function __construct(Request $request, CustomerRepository $user)
     {
-        parent::__construct();
-
         $this->middleware('client.credentials')->only(['store', 'resend']);
-        $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
+        $this->middleware('auth:admin-api,customer-api')->except('store');
+        // $this->middleware('transform.input:' . CustomerTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:read-general')->only('show');
         $this->middleware('can:view,App\Models\Customer')->only('show');
 
@@ -70,7 +69,7 @@ class CustomerController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(CustomerRequest $request)
     {
         $user = $this->user->store($request);
 

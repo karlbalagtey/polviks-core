@@ -10,11 +10,11 @@ class AgentCustomerController extends ApiController
     
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api,agent-api');
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the customers for this agent.
      *
      * @return \Illuminate\Http\Response
      */

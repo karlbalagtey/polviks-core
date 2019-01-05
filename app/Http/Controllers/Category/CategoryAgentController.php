@@ -9,11 +9,11 @@ class CategoryAgentController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api');
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the agents in this category.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,7 +25,7 @@ class CategoryAgentController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of all the agents in this category by type.
      *
      * @return \Illuminate\Http\Response
      */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agent;
 
 use App\Models\Agent;
 use Illuminate\Http\Request;
+use App\Http\Requests\AgentRequest;
 use App\Mail\Agent\AgentCreated;
 use App\Contracts\AgentRepository;
 use App\Http\Requests\UserRequest;
@@ -22,7 +23,9 @@ class AgentController extends ApiController
      */
     public function __construct(AgentRepository $user)
     {
-        parent::__construct();
+        
+        $this->middleware('client.credentials')->only(['store', 'resend']);
+        $this->middleware('auth:admin-api,agent-api')->except('store');
         $this->middleware('scope:read-general')->only('show');
         $this->middleware('can:view,App\Models\Agent')->only('show');
 
@@ -76,7 +79,7 @@ class AgentController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(AgentRequest $request)
     {
         $user = $this->user->store($request);
 

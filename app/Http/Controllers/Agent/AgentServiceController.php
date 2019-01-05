@@ -23,7 +23,7 @@ class AgentServiceController extends ApiController
      */
     public function __construct(AgentRepository $user, ServiceRepository $service)
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api,agent-api');
         $this->middleware('transform.input:' . ServiceTransformer::class)->only(['store', 'update']);
         $this->middleware('scope:manage-services')->except('index');
         $this->middleware('can:view,App\Models\Agent')->only('index');

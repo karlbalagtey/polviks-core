@@ -9,7 +9,7 @@ class AgentCategoryController extends ApiController
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:admin-api,agent-api');
         $this->middleware('scope:read-general')->only('index');
     }
 

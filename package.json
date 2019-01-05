@@ -27,7 +27,11 @@
         "react-dom": "^16.2.0"
     },
     "dependencies": {
+        "react-redux": "^6.0.0",
         "react-router-dom": "^4.3.1",
-        "reactstrap": "^6.5.0"
+        "reactstrap": "^6.5.0",
+        "redux": "^4.0.1",
+        "redux-form": "^8.1.0",
+        "redux-thunk": "^2.3.0"
     }
 }
